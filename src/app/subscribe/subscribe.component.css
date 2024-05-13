@@ -1,0 +1,36 @@
+body, html {
+  height: 100%;
+  margin: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+:host {
+  display: block;
+  padding: 2rem;
+  width: 100%;
+}
+
+.p-grid {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  max-width: 800px; /* Adjust this value to your liking */
+  margin: auto;
+}
+
+p-card {
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  transition: box-shadow 0.3s ease-in-out;
+  margin: 0 20px; /* Adjust this value to increase or decrease the space between the cards */
+}
+
+p-card:hover {
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+}
+
+button {
+  width: 100%;
+}

@@ -1,1 +1,12 @@
-<p>subscribe works!</p>
+<div class="p-grid p-justify-center">
+  <div class="p-col-12 p-md-6" *ngFor="let plan of allPlans; let i = index">
+    <p-card [header]="plan.name" [subheader]="plan.price + '€'">
+      <ul>
+        <li *ngFor="let point of plan.points">{{ point }}</li>
+      </ul>
+      <ng-template pTemplate="footer">
+        <button pButton type="button" label="Subscribe" (click)="subscribe(i)"></button>
+      </ng-template>
+    </p-card>
+  </div>
+</div>
