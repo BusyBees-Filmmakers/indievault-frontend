@@ -1,4 +1,6 @@
 /* You can add global styles to this file, and also import other style files */
-@tailwind base;
+@import "primeng/resources/themes/aura-dark-indigo/theme.css";
+@import "primeng/resources/primeng.css";
+
 @tailwind components;
 @tailwind utilities;
