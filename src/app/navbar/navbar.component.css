@@ -1,0 +1,22 @@
+.custom-menubar .p-menubar {
+    justify-content: space-between;
+    width: 100%;
+    padding: 0 20px;
+  }
+  
+  .logo {
+    font-size: 24px;
+    font-weight: bold;
+  }
+  
+  .p-inputtext-sm {
+    border: 1px solid #ccc; /* Custom border */
+    padding: 5px 10px; /* Padding for better text visibility */
+    border-radius: 20px; /* Rounded corners */
+    width: 300px; /* Fixed width */
+  }
+  
+  .p-button {
+    border-radius: 20px; /* Rounded button to match input */
+  }
+  

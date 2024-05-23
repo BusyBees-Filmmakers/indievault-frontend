@@ -3,15 +3,15 @@ import { Component, NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 
 import { CommonModule } from '@angular/common';
-import { DialogModule } from 'primeng/dialog';
-import { ButtonModule } from 'primeng/button';
-import { InputTextModule } from 'primeng/inputtext';
+import { ImportsModule } from '../imports';
+import { MovieInfoComponent } from '../movie-info/movie-info.component';
+import { NavbarComponent } from '../navbar/navbar.component';
 
 
 @Component({
   selector: 'app-homepage',
   standalone: true,
-  imports: [DialogModule, ButtonModule,InputTextModule, CommonModule],
+  imports: [CommonModule,ImportsModule, MovieInfoComponent,NavbarComponent],
   templateUrl: './homepage.component.html',
   styleUrls: ['./homepage.component.css'],
 })

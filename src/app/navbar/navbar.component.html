@@ -1,0 +1,16 @@
+<p-menubar [model]="items" class="custom-menubar">
+  <ng-template pTemplate="start">
+    <div class="logo text-2xl font-bold">Logo</div>
+  </ng-template>
+  <ng-template pTemplate="end">
+    <p-inputGroup>
+      <input type="text" pInputText placeholder="Search" />
+      <button
+        type="button"
+        pButton
+        icon="pi pi-search"
+        class="p-button-warning"
+      ></button>
+    </p-inputGroup>
+  </ng-template>
+</p-menubar>
