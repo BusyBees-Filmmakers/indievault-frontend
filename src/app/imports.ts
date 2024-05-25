@@ -11,6 +11,10 @@ import { InputGroupAddonModule } from 'primeng/inputgroupaddon';
 import { ButtonModule } from 'primeng/button';
 import { ToastModule } from 'primeng/toast';
 import { OverlayPanelModule } from 'primeng/overlaypanel';
+import { TabViewModule } from 'primeng/tabview';
+import { TieredMenuModule } from 'primeng/tieredmenu';
+
+// Import Angular modules
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 import { NgModule } from '@angular/core';
@@ -35,6 +39,8 @@ import { CommonModule } from '@angular/common';
     CardModule,
     OverlayPanelModule,
     CommonModule,
+    TabViewModule,
+    TieredMenuModule,
   ],
   exports: [
     FormsModule,
@@ -52,6 +58,8 @@ import { CommonModule } from '@angular/common';
     CardModule,
     OverlayPanelModule,
     CommonModule,
+    TabViewModule,
+    TieredMenuModule,
   ],
   providers: [],
 })

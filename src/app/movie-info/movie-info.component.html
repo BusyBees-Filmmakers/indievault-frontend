@@ -1,5 +1,42 @@
-<div *ngIf="movie">
-  <h2>{{ movie.title }}</h2>
-  <p>{{ movie.info }}</p>
-  <!-- Add more details as needed -->
+<div *ngIf="movie" class="p-6 bg-gray-800 text-white rounded-lg shadow-lg">
+  <h2 class="text-2xl font-bold mb-4">{{ movie.title }}</h2>
+  <p class="mb-4">{{ movie.info }}</p>
+  
+  <div class="flex justify-between items-center mb-4">
+    <button pButton type="button" icon="pi pi-play" label="Play Movie" class="p-button-success"></button>
+    <button pButton type="button" icon="pi pi-user" label="Filmmaker Profile" class="p-button-info"></button>
+  </div>
+
+  <div class="mb-4">
+    <h3 class="text-xl font-semibold">Description</h3>
+    <p>{{ movie.description }}</p>
+  </div>
+
+  <div class="mb-4">
+    <h3 class="text-xl font-semibold">Trailer</h3>
+    <!-- Assuming you have a trailer URL in your movie object -->
+    <video controls class="w-full">
+      <source [src]="movie.trailerUrl" type="video/mp4">
+      Your browser does not support the video tag.
+    </video>
+  </div>
+
+  <p-tabView>
+    <p-tabPanel header="Info">
+      <!-- Movie info content -->
+      <p>{{ movie.longDescription }}</p>
+    </p-tabPanel>
+    <p-tabPanel header="Credits">
+      <!-- Movie credits content -->
+      <ul>
+        <li *ngFor="let credit of movie.credits">{{ credit }}</li>
+      </ul>
+    </p-tabPanel>
+    <p-tabPanel header="Reviews">
+      <!-- Movie reviews content -->
+      <ul>
+        <li *ngFor="let review of movie.reviews">{{ review }}</li>
+      </ul>
+    </p-tabPanel>
+  </p-tabView>
 </div>

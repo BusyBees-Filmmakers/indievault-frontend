@@ -1,22 +1,9 @@
-.custom-menubar .p-menubar {
-    justify-content: space-between;
-    width: 100%;
-    padding: 0 20px;
+/* src/app/navbar/navbar.component.css */
+.navbar {
+    @apply flex items-center justify-between p-4 bg-gray-800 text-white;
   }
   
-  .logo {
-    font-size: 24px;
-    font-weight: bold;
-  }
-  
-  .p-inputtext-sm {
-    border: 1px solid #ccc; /* Custom border */
-    padding: 5px 10px; /* Padding for better text visibility */
-    border-radius: 20px; /* Rounded corners */
-    width: 300px; /* Fixed width */
-  }
-  
-  .p-button {
-    border-radius: 20px; /* Rounded button to match input */
+  .profile-icon {
+    @apply cursor-pointer;
   }
   

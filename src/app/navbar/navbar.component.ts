@@ -1,22 +1,19 @@
 import { Component, NgModule } from '@angular/core';
-import { MenuItem } from 'primeng/api';
-import { OverlayPanel } from 'primeng/overlaypanel';
+
+
 
 import { Router } from '@angular/router';
-// import { ImportsModule } from '../imports';
+import { ImportsModule } from '../imports';
 import { FormsModule } from '@angular/forms';
-import { InputGroupModule } from 'primeng/inputgroup';
-import { InputGroupAddonModule } from 'primeng/inputgroupaddon';
-import { InputTextModule } from 'primeng/inputtext';
-import { ButtonModule } from 'primeng/button';
-import { MenubarModule } from 'primeng/menubar';
+import { MenuItem } from 'primeng/api';
+import { OverlayPanel } from 'primeng/overlaypanel';
 
 
 
 @Component({
   selector: 'app-navbar',
   standalone: true,
-  imports: [FormsModule, InputGroupModule, InputGroupAddonModule, InputTextModule, ButtonModule, MenubarModule],
+  imports: [FormsModule, ImportsModule],
   templateUrl: './navbar.component.html',
   styleUrl: './navbar.component.css'
 })
