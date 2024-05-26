@@ -1,4 +1,4 @@
-<p-menubar [model]="items" class="bg-gray-800 text-white">
+<p-menubar [model]="items" class="bg-gray-800 text-white z-40 sticky top-0">
   <ng-template pTemplate="start">
     <div class="logo text-2xl font-bold">
       <a [routerLink]="['/']">
@@ -25,7 +25,7 @@
         class="p-button-rounded p-button-text cursor-pointer"
         (click)="profileMenu.toggle($event)"
       ></button>
-      <p-menu #profileMenu [model]="profileItems" popup></p-menu>
+      <p-menu #profileMenu [model]="profileItems" popup class="z-50"></p-menu>
     </div>
   </ng-template>
 </p-menubar>

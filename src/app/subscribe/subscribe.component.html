@@ -7,7 +7,7 @@
         <li *ngFor="let point of plan.points">{{ point }}</li>
       </ul>
       <ng-template pTemplate="footer">
-        <button pButton type="button" label="Subscribe" (click)="subscribe(i)"></button>
+        <a pButton type="button" label="Subscribe" href="/home" (click)="subscribe(i)"></a>
       </ng-template>
     </p-card>
   </div>
