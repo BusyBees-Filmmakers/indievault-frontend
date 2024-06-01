@@ -1,0 +1,58 @@
+<div class="p-6 bg-gray-800 text-white">
+  <div class="flex flex-col items-center">
+    <div class="absolute top-4 right-4">
+      <button
+      pButton
+      type="button"
+      label="Upload"
+      icon="pi pi-upload"
+      class="mt-4"
+      (click)="showUploadPopup()"
+      ></button>
+    </div>
+    <div
+      class="icon bg-gray-600 rounded-full w-24 h-24 flex items-center justify-center"
+    >
+      <i class="pi pi-user text-4xl"></i>
+    </div>
+      <h2>Filmmaker Name</h2>
+      <p>Lorem, ipsum.</p>
+      <h2>Brief Description</h2>
+      <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Ad maiores minus expedita illum!</p>
+    <h2>Movie Feed</h2>
+    <div *ngFor="let section of sections" class="movie-feed mt-6 w-full">
+      <p-carousel
+        [value]="section.movies"
+        [numVisible]="4"
+        [numScroll]="1"
+        [circular]="true"
+        class="movie-carousel"
+      >
+        <ng-template let-movie pTemplate="item">
+          <div
+            class="movie-item shadow-lg hover:shadow-2xl transition-shadow duration-300 cursor-pointer rounded overflow-hidden bg-gray-800 mx-4"
+            (click)="showMovieInfo(movie)"
+          >
+            <img
+              src="https://via.placeholder.com/150"
+              alt="{{ movie.title }} Poster"
+              class="w-full h-40 object-cover rounded-t"
+            />
+            <div class="text-center p-4 text-gray-200">
+              <h3 class="font-semibold text-lg">{{ movie.title }}</h3>
+            </div>
+          </div>
+        </ng-template>
+      </p-carousel>
+    </div>
+  </div>
+</div>
+
+<p-dialog
+  header="Upload a Movie"
+  [(visible)]="displayUploadPopup"
+  [modal]="true"
+  [style]="{ width: '400px' }"
+>
+  <app-upload-popup></app-upload-popup>
+</p-dialog>
