@@ -4,7 +4,7 @@
   "builds": [
     {
       "src": "package.json",
-      "use": "@vercel/node",
+      "use": "@vercel/static-build",
       "config": {
         "externalFiles": [
           "node_modules/primeicons/primeicons.css",
