@@ -1,11 +1,12 @@
 import { Component } from '@angular/core';
 import { ImportsModule } from '../imports';
 import { UploadPopupComponent } from '../upload-popup/upload-popup.component';
+import { MovieInfoComponent } from '../movie-info/movie-info.component';
 
 @Component({
   selector: 'app-profile',
   standalone: true,
-  imports: [ImportsModule, UploadPopupComponent],
+  imports: [ImportsModule, UploadPopupComponent, MovieInfoComponent],
   templateUrl: './profile.component.html',
   styleUrl: './profile.component.css',
 })

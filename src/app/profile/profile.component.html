@@ -49,6 +49,19 @@
 </div>
 
 <p-dialog
+header="Movie Info"
+[(visible)]="displayMovieDialog"
+[modal]="true"
+[style]="{ width: '50vw' }"
+[draggable]="false" 
+[resizable]="false"
+class="rounded-lg shadow-lg"
+(onHide)="onDialogHide()"
+>
+<app-movie-info [movie]="selectedMovie" class="p-4"></app-movie-info>
+</p-dialog>
+
+<p-dialog
   header="Upload a Movie"
   [(visible)]="displayUploadPopup"
   [modal]="true"
