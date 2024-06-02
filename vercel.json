@@ -1,12 +1,23 @@
 {
+  "version": 2,
+  "name": "indievault-frontend",
   "builds": [
     {
       "src": "package.json",
       "use": "@vercel/node",
       "config": {
         "externalFiles": [
-          "node_modules/primeicons/primeicons.css"
+          "node_modules/primeicons/primeicons.css",
+          "node_modules/primeng/resources/themes/aura-dark-indigo/theme.css",
+          "node_modules/primeng/resources/primeng.min.css"
         ]
+      }
+    },
+    {
+      "src": "src/main.ts",
+      "use": "@vercel/static-build",
+      "config": {
+        "distDir": "dist/indievault-frontend"
       }
     }
   ],
