@@ -1,0 +1,47 @@
+body, html {
+  height: 100%;
+  margin: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+:host {
+  display: block;
+  padding: 2rem;
+  width: 100%;
+}
+
+.p-grid {
+  display: flex;
+  flex-direction: row; /* This will align the cards from left to right */
+  justify-content: center;
+  align-items: center;
+  max-width: 800px; /* Adjust this value to your liking */
+  margin: auto;
+  flex-wrap: wrap; /* This will allow the cards to wrap to the next line if the container width is not enough */
+}
+
+.p-col-12.p-md-6 {
+  margin: 0 20px; /* Adjust this value to increase or decrease the space between the cards */
+}
+
+p-card {
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  transition: box-shadow 0.3s ease-in-out;
+  margin: 0 20px; /* Adjust this value to increase or decrease the space between the cards */
+  width: 300px; /* Set a fixed width */
+  height: 400px; /* Set a fixed height */
+}
+
+p-card:hover {
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+}
+
+button {
+  width: 100%;
+}
+
+h1 {
+  text-align: center;
+}

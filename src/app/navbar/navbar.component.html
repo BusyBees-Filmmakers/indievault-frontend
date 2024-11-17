@@ -1,0 +1,31 @@
+<p-menubar [model]="items" class="bg-gray-800 text-white z-40 sticky top-0">
+  <ng-template pTemplate="start">
+    <div class="logo text-2xl font-bold">
+      <a [routerLink]="['/']">
+        <!-- Small img -->
+        <img src="assets/icon-no-bg.png" alt="logo" class="w-12 h-12" />
+      </a>
+    </div>
+  </ng-template>
+  <ng-template pTemplate="end">
+    <div class="flex items-center space-x-4">
+      <p-inputGroup class="flex items-center">
+        <input type="text" pInputText placeholder="Search" class="border-0 rounded-l-md"/>
+        <button
+          type="button"
+          pButton
+          icon="pi pi-search"
+          class="p-button-warning border-0 rounded-r-md bg-orange-500 text-white"
+        ></button>
+      </p-inputGroup>
+      <button
+        pButton
+        type="button"
+        icon="pi pi-user"
+        class="p-button-rounded p-button-text cursor-pointer"
+        (click)="profileMenu.toggle($event)"
+      ></button>
+      <p-menu #profileMenu [model]="profileItems" popup class="z-50"></p-menu>
+    </div>
+  </ng-template>
+</p-menubar>
