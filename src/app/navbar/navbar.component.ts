@@ -24,9 +24,9 @@ export class NavbarComponent {
 
   constructor() {
     this.items = [
-      { label: 'Home', icon: 'pi pi-fw pi-home', routerLink: ['/'] },
-      { label: 'Movies', icon: 'pi pi-fw pi-video', routerLink: ['/movies'] },
-      { label: 'Genres', icon: 'pi pi-fw pi-tags', routerLink: ['/genres'] },
+      { label: 'Home', icon: 'pi pi-fw pi-home', routerLink: ['/home'] },
+      { label: 'About', icon: 'pi pi-fw pi-info-circle', routerLink: ['/about'] },
+      { label: 'Contact Us', icon: 'pi pi-fw pi-envelope', routerLink: ['/contact'] },
       // other menu items
     ];
 
