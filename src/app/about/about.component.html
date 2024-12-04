@@ -1,6 +1,6 @@
 
 
-<app-navbar class="bg-white-800 text-white shadow-md sticky top-0 z-40"></app-navbar>
+<!-- <app-navbar class="bg-white-800 text-white shadow-md sticky top-0 z-40"></app-navbar> -->
 <div class="flex flex-col items-center p-6 space-y-12">
     <!-- Header Section -->
   
@@ -55,9 +55,8 @@
       <p class="text-lg text-white-700 max-w-md mx-auto mb-6">
         Sign up today and become a part of the Indievault community. Whether you're a filmmaker or a film enthusiast, we have something for you!
       </p>
-      <button class="bg-blue-600 text-white py-2 px-6 rounded-lg hover:bg-blue-700">
-        Get Started Now
-      </button>
+      <p-button class="mt-3" label="Sign up with Google" (onClick)="login()"/>
+
     </section>
   </div>
   

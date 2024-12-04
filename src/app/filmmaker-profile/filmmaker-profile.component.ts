@@ -8,10 +8,10 @@ import { NavbarComponent } from "../navbar/navbar.component";
   selector: 'app-profile',
   standalone: true,
   imports: [ImportsModule, UploadPopupComponent, MovieInfoComponent, NavbarComponent],
-  templateUrl: './profile.component.html',
-  styleUrl: './profile.component.css',
+  templateUrl: './filmmaker-profile.component.html',
+  styleUrl: './filmmaker-profile.component.css',
 })
-export class ProfileComponent {
+export class FilmmakerProfileComponent {
   displayUploadPopup: boolean = false;
 
   showUploadPopup() {
