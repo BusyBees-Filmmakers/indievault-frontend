@@ -2,14 +2,20 @@ import {Component, OnInit} from '@angular/core';
 import {ButtonModule} from "primeng/button";
 import {NgOptimizedImage} from "@angular/common";
 import {ActivatedRoute, Router} from "@angular/router";
+import { AboutComponent } from "../about/about.component";
+import { ContactUsComponent } from "../contact-us/contact-us.component";
+import { NavbarComponent } from "../navbar/navbar.component";
 
 @Component({
   selector: 'app-login',
   standalone: true,
   imports: [
     ButtonModule,
-    NgOptimizedImage
-  ],
+    NgOptimizedImage,
+    AboutComponent,
+    ContactUsComponent,
+    NavbarComponent
+],
   templateUrl: './login.component.html',
   styleUrl: './login.component.css'
 })
