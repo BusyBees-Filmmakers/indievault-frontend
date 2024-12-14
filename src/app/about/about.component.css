@@ -1,0 +1,13 @@
+h1,
+h2 {
+    color: white;
+    /* Darker shade for titles */
+}
+
+p {
+    line-height: 1.6;
+}
+
+button {
+    transition: background-color 0.3s ease;
+}
