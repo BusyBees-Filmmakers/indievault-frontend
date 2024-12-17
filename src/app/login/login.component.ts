@@ -1,16 +1,20 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, inject, OnInit} from '@angular/core';
 import {ButtonModule} from "primeng/button";
 import {NgOptimizedImage} from "@angular/common";
-import {ActivatedRoute, Router} from "@angular/router";
+import {Router} from "@angular/router";
 import { AboutComponent } from "../about/about.component";
 import { ContactUsComponent } from "../contact-us/contact-us.component";
 import { NavbarComponent } from "../navbar/navbar.component";
+import {CommonModule} from "@angular/common";
+import { Auth, GoogleAuthProvider, signInWithPopup } from '@angular/fire/auth';
 
 @Component({
   selector: 'app-login',
   standalone: true,
   imports: [
     ButtonModule,
+    NgOptimizedImage,
+    CommonModule,
     NgOptimizedImage,
     AboutComponent,
     ContactUsComponent,
@@ -21,12 +25,25 @@ import { NavbarComponent } from "../navbar/navbar.component";
 })
 export class LoginComponent implements OnInit{
 
+  auth = inject(Auth);
+  router = inject(Router);
 
-  constructor(private router: Router) {
+  constructor() {
   }
 
   ngOnInit(): void {
     //TODO: Implement check for user login
+  }
+
+  async loginWithGoogle() {
+    const provider = new GoogleAuthProvider();
+    await signInWithPopup(this.auth, provider).then(
+      (result) => {
+        if (result.user) {
+          this.router.navigate(['subscribe']);
+        }
+      }
+    )
   }
 
   login() {
