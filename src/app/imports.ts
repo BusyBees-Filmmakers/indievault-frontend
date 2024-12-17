@@ -21,6 +21,11 @@ import { NgModule } from '@angular/core';
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
+// Import Firebase modules
+import { environment } from '../environments/environment';
+import { AngularFireModule } from '@angular/fire/compat';
+import { AngularFirestoreModule } from '@angular/fire/compat/firestore';
+
 
 @NgModule({
   imports: [
@@ -41,6 +46,8 @@ import { CommonModule } from '@angular/common';
     CommonModule,
     TabViewModule,
     TieredMenuModule,
+    AngularFireModule.initializeApp(environment.firebaseConfig), 
+    AngularFirestoreModule 
   ],
   exports: [
     FormsModule,
