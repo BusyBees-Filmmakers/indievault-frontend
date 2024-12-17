@@ -13,9 +13,7 @@ import { Auth, GoogleAuthProvider, signInWithPopup } from '@angular/fire/auth';
   standalone: true,
   imports: [
     ButtonModule,
-    NgOptimizedImage,
     CommonModule,
-    NgOptimizedImage,
     AboutComponent,
     ContactUsComponent,
     NavbarComponent

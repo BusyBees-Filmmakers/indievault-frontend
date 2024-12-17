@@ -7,7 +7,7 @@ import { NavbarComponent } from "../navbar/navbar.component";
 @Component({
   selector: 'app-profile',
   standalone: true,
-  imports: [ImportsModule, UploadPopupComponent, MovieInfoComponent, NavbarComponent],
+  imports: [ImportsModule, MovieInfoComponent, NavbarComponent],
   templateUrl: './filmmaker-profile.component.html',
   styleUrl: './filmmaker-profile.component.css',
 })
