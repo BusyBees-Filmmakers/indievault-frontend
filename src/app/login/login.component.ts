@@ -11,7 +11,11 @@ import { NavbarComponent } from "../navbar/navbar.component";
   standalone: true,
   imports: [
     ButtonModule,
+<<<<<<< Updated upstream
     NgOptimizedImage,
+=======
+    CommonModule,
+>>>>>>> Stashed changes
     AboutComponent,
     ContactUsComponent,
     NavbarComponent
