@@ -1,29 +1,51 @@
-<app-navbar class="bg-white-800 text-white shadow-md sticky top-0 z-40"></app-navbar>
+<app-navbar
+  class="bg-white-800 text-white shadow-md sticky top-0 z-40"
+></app-navbar>
 <div class="p-6 bg-gray-800 text-white">
   <div class="flex flex-col items-center">
-    <div class="absolute top-4 right-4">
-      <button
-      pButton
-      type="button"
-      label="Upload"
-      icon="pi pi-upload"
-      class="mt-4"
-      (click)="showUploadPopup()"
-      ></button>
+    <div class="relative w-full">
+      <div class="absolute top-4 right-4">
+        <button
+          pButton
+          type="button"
+          label="Upload"
+          icon="pi pi-upload"
+          class="mt-4"
+          (click)="showUploadPopup()"
+        ></button>
+      </div>
     </div>
+
+    <!-- Profile Picture -->
     <div
-      class="icon bg-gray-600 rounded-full w-24 h-24 flex items-center justify-center"
+      class="icon bg-gray-600 rounded-full w-24 h-24 flex items-center justify-center overflow-hidden"
     >
-      <i class="pi pi-user text-4xl"></i>
+      <img
+        *ngIf="userProfilePic; else defaultProfile"
+        [src]="userProfilePic"
+        alt="Profile Picture"
+        class="w-full h-full object-cover"
+      />
+      <ng-template #defaultProfile>
+        <i class="pi pi-user text-4xl"></i>
+      </ng-template>
     </div>
-      <h2>Filmmaker Name</h2>
-      <p>Lorem, ipsum.</p>
-      <h2>Brief Description</h2>
-      <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Ad maiores minus expedita illum!</p>
+
+    <!-- User Name -->
+    <h2>{{ userName || "Your Name" }}</h2>
+    <p>Lorem, ipsum.</p>
+
+    <h2>Brief Description</h2>
+    <p>
+      Lorem ipsum dolor sit amet consectetur adipisicing elit. Ad maiores minus
+      expedita illum!
+    </p>
+
     <h2>Movie Feed</h2>
-    <div *ngFor="let section of sections" class="movie-feed mt-6 w-full">
+    <div class="movie-feed mt-6 w-full">
+      <!-- Carousel for Movies -->
       <p-carousel
-        [value]="section.movies"
+        [value]="movies"
         [numVisible]="4"
         [numScroll]="1"
         [circular]="true"
@@ -35,7 +57,7 @@
             (click)="showMovieInfo(movie)"
           >
             <img
-              src="https://via.placeholder.com/150"
+              src="{{ movie.posterUrl }}"
               alt="{{ movie.title }} Poster"
               class="w-full h-40 object-cover rounded-t"
             />
@@ -48,18 +70,17 @@
     </div>
   </div>
 </div>
-
 <p-dialog
-header="Movie Info"
-[(visible)]="displayMovieDialog"
-[modal]="true"
-[style]="{ width: '50vw' }"
-[draggable]="false" 
-[resizable]="false"
-class="rounded-lg shadow-lg"
-(onHide)="onDialogHide()"
+  header="Movie Info"
+  [(visible)]="displayMovieDialog"
+  [modal]="true"
+  [style]="{ width: '50vw' }"
+  [draggable]="false"
+  [resizable]="false"
+  class="rounded-lg shadow-lg"
+  (onHide)="onDialogHide()"
 >
-<app-movie-info [movie]="selectedMovie" class="p-4"></app-movie-info>
+  <app-movie-info [movie]="selectedMovie" class="p-4"></app-movie-info>
 </p-dialog>
 
 <p-dialog

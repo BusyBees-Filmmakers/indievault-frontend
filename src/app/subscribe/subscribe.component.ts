@@ -4,6 +4,8 @@ import {CardModule} from "primeng/card";
 import {ButtonModule} from "primeng/button";
 import {NgForOf} from "@angular/common";
 import {ToastModule} from "primeng/toast";
+import { Auth } from '@angular/fire/auth';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-subscribe',
@@ -25,7 +27,7 @@ export class SubscribeComponent implements OnInit{
         'Access to analytics', 'Receive revenue']},
   ]
 
-  constructor() {
+  constructor(private auth: Auth, private router: Router) {
   }
 
   ngOnInit(): void {
@@ -33,7 +35,19 @@ export class SubscribeComponent implements OnInit{
   }
 
   subscribe(chosenPlan: number) {
-    //TODO: IMPLEMENT SUBSCRIPTION
-    //TODO: IN MOCK, REDIRECT TO HOME PAGE
+    const user = this.auth.currentUser;
+
+    if (user) {
+      // Store subscription status in localStorage
+      localStorage.setItem(`subscription_${user.uid}`, 'subscribed');
+
+      // Optionally, log which plan the user selected (if needed for future use)
+      localStorage.setItem(`subscription_plan_${user.uid}`, this.allPlans[chosenPlan].name);
+
+      // Redirect to home page
+      this.router.navigate(['home']);
+    } else {
+      console.error('No user is logged in!');
+    }
   }
 }

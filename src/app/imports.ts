@@ -16,10 +16,18 @@ import { TieredMenuModule } from 'primeng/tieredmenu';
 
 // Import Angular modules
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { NgModule } from '@angular/core';
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
+
+// Firebase Auth
+import { Auth, signOut } from '@angular/fire/auth';
+
+// Import Firebase modules
+// import { environment } from '../environments/environment';
+// import { AngularFireModule } from '@angular/fire/compat';
+// import { AngularFirestoreModule } from '@angular/fire/compat/firestore';
 
 
 @NgModule({
