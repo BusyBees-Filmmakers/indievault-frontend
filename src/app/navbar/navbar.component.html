@@ -10,7 +10,12 @@
   <ng-template pTemplate="end">
     <div class="flex items-center space-x-4">
       <p-inputGroup class="flex items-center">
-        <input type="text" pInputText placeholder="Search" class="border-0 rounded-l-md"/>
+        <input
+          type="text"
+          pInputText
+          placeholder="Search"
+          class="border-0 rounded-l-md"
+        />
         <button
           type="button"
           pButton
@@ -19,13 +24,31 @@
         ></button>
       </p-inputGroup>
       <button
+        *ngIf="isLoggedIn"
         pButton
         type="button"
-        icon="pi pi-user"
         class="p-button-rounded p-button-text cursor-pointer"
         (click)="profileMenu.toggle($event)"
-      ></button>
-      <p-menu #profileMenu [model]="profileItems" popup class="z-50"></p-menu>
+      >
+        <!-- Conditionally display the profile picture -->
+        <img
+          *ngIf="isLoggedIn; else defaultProfile"
+          [src]="profileImageUrl"
+          alt="Google Profile"
+          class="w-10 h-10 rounded-full"
+        />
+        <ng-template #defaultProfile>
+          <i class="pi pi-user text-2xl"></i>
+          <!-- Default profile icon -->
+        </ng-template>
+      </button>
+      <p-menu
+        *ngIf="isLoggedIn"
+        #profileMenu
+        [model]="profileItems"
+        popup
+        class="z-50"
+      ></p-menu>
     </div>
   </ng-template>
 </p-menubar>

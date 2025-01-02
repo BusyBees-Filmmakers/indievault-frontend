@@ -21,6 +21,9 @@ import { NgModule } from '@angular/core';
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
+// Firebase Auth
+import { Auth, signOut } from '@angular/fire/auth';
+
 // Import Firebase modules
 // import { environment } from '../environments/environment';
 // import { AngularFireModule } from '@angular/fire/compat';

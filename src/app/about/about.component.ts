@@ -22,16 +22,16 @@ export class AboutComponent {
   router = inject(Router);
 
   constructor(private userService: UserService) {
-    this.auth.onAuthStateChanged((user) => {
-      if (user) {
-        const fetchedUser = this.userService.getUserByUid(user.uid);
-        if (fetchedUser) {
-           this.router.navigate(['/home']).then(r => console.log('welcome back user'));
-        } else {
-           this.router.navigate(['/subscribe']).then(r => console.log('welcome new user'));
-        }
-      }
-    });
+    // this.auth.onAuthStateChanged((user) => {
+    //   if (user) {
+    //     const fetchedUser = this.userService.getUserByUid(user.uid);
+    //     if (fetchedUser) {
+    //        this.router.navigate(['/home']).then(r => console.log('welcome back user'));
+    //     } else {
+    //        this.router.navigate(['/']).then(r => console.log('welcome new user'));
+    //     }
+    //   }
+    // });
   }
 
   async loginWithGoogle() {
