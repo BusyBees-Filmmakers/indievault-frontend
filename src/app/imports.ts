@@ -16,7 +16,7 @@ import { TieredMenuModule } from 'primeng/tieredmenu';
 
 // Import Angular modules
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { NgModule } from '@angular/core';
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
@@ -46,8 +46,8 @@ import { AngularFirestoreModule } from '@angular/fire/compat/firestore';
     CommonModule,
     TabViewModule,
     TieredMenuModule,
-    AngularFireModule.initializeApp(environment.firebaseConfig), 
-    AngularFirestoreModule 
+    AngularFireModule.initializeApp(environment.firebaseConfig),
+    AngularFirestoreModule
   ],
   exports: [
     FormsModule,

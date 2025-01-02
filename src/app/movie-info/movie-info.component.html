@@ -1,10 +1,24 @@
 <div *ngIf="movie" class="p-6 bg-gray-800 text-white rounded-lg shadow-lg">
   <h2 class="text-2xl font-bold mb-4">{{ movie.title }}</h2>
   <p class="mb-4">{{ movie.info }}</p>
-  
+
   <div class="flex justify-between items-center mb-4">
-    <button pButton type="button" icon="pi pi-play" label="Play Movie" class="p-button-success"></button>
-    <a href="/filmmaker" pButton type="button" icon="pi pi-user" label="Filmmaker Profile" class="p-button-info"></a>
+    <button
+      pButton
+      type="button"
+      icon="pi pi-play"
+      label="Play Movie"
+      class="p-button-success"
+      [routerLink]="['/movie', movie.youtubeId]"
+    ></button>
+    <a
+      href="/filmmaker"
+      pButton
+      type="button"
+      icon="pi pi-user"
+      label="Filmmaker Profile"
+      class="p-button-info"
+    ></a>
   </div>
 
   <div class="mb-4">
@@ -14,29 +28,41 @@
 
   <div class="mb-4">
     <h3 class="text-xl font-semibold">Trailer</h3>
-    <!-- Assuming you have a trailer URL in your movie object -->
-    <video controls class="w-full">
-      <source [src]="movie.trailerUrl" type="video/mp4">
-      Your browser does not support the video tag.
-    </video>
+    <app-dynamic-iframe videoId="CXhnPLMIET0"></app-dynamic-iframe>
   </div>
 
   <p-tabView>
+    <!-- Info Tab -->
     <p-tabPanel header="Info">
-      <!-- Movie info content -->
       <p>{{ movie.longDescription }}</p>
     </p-tabPanel>
+
+    <!-- Credits Tab -->
     <p-tabPanel header="Credits">
-      <!-- Movie credits content -->
-      <ul>
-        <li *ngFor="let credit of movie.credits">{{ credit }}</li>
+      <h3 class="text-lg font-semibold mb-2">Credits</h3>
+      <ul class="list-disc list-inside">
+        <li *ngFor="let credit of movie.credits">
+          {{ credit.role }}: {{ credit.name }}
+        </li>
       </ul>
     </p-tabPanel>
+
+    <!-- Reviews Tab -->
     <p-tabPanel header="Reviews">
-      <!-- Movie reviews content -->
-      <ul>
-        <li *ngFor="let review of movie.reviews">{{ review }}</li>
-      </ul>
+      <h3 class="text-lg fontF-semibold mb-4">Reviews</h3>
+      <div *ngFor="let review of this.getReviews()" class="mb-6">
+        <div class="flex items-center mb-2">
+          <span class="font-semibold mr-2">{{ review.author }}</span>
+          <p-rating
+            [ngModel]="review.rating"
+            [readonly]="true"
+            [cancel]="false"
+            stars="5"
+            class="flex"
+          ></p-rating>
+        </div>
+        <p class="ml-6">"{{ review.comment }}"</p>
+      </div>
     </p-tabPanel>
   </p-tabView>
 </div>

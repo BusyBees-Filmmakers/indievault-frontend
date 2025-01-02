@@ -1,0 +1,9 @@
+.fullscreen-container {
+  width: 99vw;
+  height: 99vh;
+}
+
+.fullscreen-container iframe {
+  width: 100%;
+  height: 100%;
+}
