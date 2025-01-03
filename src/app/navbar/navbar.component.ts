@@ -10,43 +10,33 @@ import { OverlayPanel } from 'primeng/overlaypanel';
 
 import { Auth, onAuthStateChanged, signOut, User } from '@angular/fire/auth';
 
-
-
 @Component({
   selector: 'app-navbar',
   standalone: true,
   imports: [FormsModule, ImportsModule],
   templateUrl: './navbar.component.html',
-  styleUrl: './navbar.component.css'
+  styleUrl: './navbar.component.css',
 })
-
 export class NavbarComponent {
   @ViewChild('profileMenu') profileMenu!: Menu;
 
-  items: MenuItem[];
-  profileItems: MenuItem[];
+  items: MenuItem[]= [];
+  profileItems: MenuItem[]= [];
 
-  profileImageUrl: string | null = null; 
-  isLoggedIn: boolean = false; 
+  profileImageUrl: string | null = null;
+  isLoggedIn: boolean = false;
+  isFilmmaker: boolean = false;
 
   constructor(private auth: Auth, private router: Router) {
-    this.items = [
-      { label: 'Home', icon: 'pi pi-fw pi-home', routerLink: ['/home'] },
-      // { label: 'About', icon: 'pi pi-fw pi-info-circle', routerLink: ['/about'] },
-      // { label: 'Contact Us', icon: 'pi pi-fw pi-envelope', routerLink: ['/contact'] },
-      // other menu items
-    ];
-
-    this.profileItems = [
-      { label: 'Profile', icon: 'pi pi-fw pi-user', routerLink: ['/profile'] },
-      { label: 'Settings', icon: 'pi pi-fw pi-cog', routerLink: ['/settings'] },
-      { label: 'Logout', icon: 'pi pi-fw pi-power-off', command: () => this.logout() }
-    ];
-
-    // Listen for auth state changes
     onAuthStateChanged(this.auth, (user: User | null) => {
-      this.isLoggedIn = !!user; // True if user is logged in
-      this.profileImageUrl = user?.photoURL || null; // Set Google profile image if available
+      this.isLoggedIn = !!user;
+      this.profileImageUrl = user?.photoURL || null;
+
+      if (user) {
+        const plan = localStorage.getItem(`subscription_plan_${user.uid}`);
+        this.isFilmmaker = plan === 'Filmmaker'; // Check if the user is a filmmaker
+      }
+
       this.updateMenuItems();
     });
   }
@@ -56,6 +46,7 @@ export class NavbarComponent {
     signOut(this.auth)
     .then(() => {
       this.router.navigate(['/']); // Redirect to login page
+      localStorage.clear(); // Clear local storage
     })
     .catch(error => {
       console.error('Error during logout:', error);
@@ -63,17 +54,36 @@ export class NavbarComponent {
   }
 
   updateMenuItems() {
-    // Dynamically set menu items based on login status
+    // Update the main menu items
     this.items = [
       ...(this.isLoggedIn
-        ? [{ label: 'Home', icon: 'pi pi-fw pi-home', routerLink: ['/home'] }]
+        ? [
+            { label: 'Home', icon: 'pi pi-fw pi-home', routerLink: ['/home'] },
+            { label: 'Product features', icon: 'pi pi-fw pi-star', routerLink: ['/product-features'] }
+          ]
+        : [{ label: 'Product Features', icon: 'pi pi-fw pi-star', routerLink: ['/product-features'] }]),
+    ];
+
+    // Update the profile menu items
+    this.profileItems = [
+      ...(this.isFilmmaker
+        ? [
+            {
+              label: 'Profile',
+              icon: 'pi pi-fw pi-user',
+              routerLink: ['/profile'],
+            },
+          ]
         : []),
+      {
+        label: 'Logout',
+        icon: 'pi pi-fw pi-power-off',
+        command: () => this.logout(),
+      },
     ];
   }
 
   toggleSearch(event: any, op: OverlayPanel) {
     op.toggle(event);
   }
-
 }
-

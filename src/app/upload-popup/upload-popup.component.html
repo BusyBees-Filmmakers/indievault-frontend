@@ -1,23 +1,17 @@
-<div>
+<form [formGroup]="uploadForm" (ngSubmit)="onSubmit()">
+  <p-fileUpload [disabled]="true"></p-fileUpload>
   <div class="mb-4">
-    <label for="name" class="block text-sm font-medium text-gray-700"
-      >Name</label
-    >
-    <input id="name" type="text" pInputText class="mt-1 block w-full" />
+    <label for="name" class="block text-sm font-medium text-gray-700">Name</label>
+    <input id="name" type="text" pInputText formControlName="name" class="mt-1 block w-full" readonly />
+    <p-message *ngIf="uploadForm.get('name')?.invalid && uploadForm.get('name')?.touched" severity="danger" text="Name is required"></p-message>
   </div>
   <div class="mb-4">
-    <label for="category" class="block text-sm font-medium text-gray-700"
-      >Category</label
-    >
-    <input id="category" type="text" pInputText class="mt-1 block w-full" />
+    <label for="category" class="block text-sm font-medium text-gray-700">Category</label>
+    <input id="category" type="text" pInputText formControlName="category" class="mt-1 block w-full" readonly />
+    <p-message *ngIf="uploadForm.get('category')?.invalid && uploadForm.get('category')?.touched" severity="danger" text="Category is required"></p-message>
   </div>
-  <div class="mb-4">
-    <label for="tags" class="block text-sm font-medium text-gray-700"
-      >Tags</label
-    >
-    <input id="tags" type="text" pInputText class="mt-1 block w-full" />
-  </div>
+  <p class="text-sm text-gray-500">For the demo, the values are hardcoded. Please just press the upload button.</p>
   <div class="flex justify-end">
-    <button pButton type="button" label="Upload" icon="pi pi-check"></button>
+    <button pButton type="submit" label="Upload" icon="pi pi-check"></button>
   </div>
-</div>
+</form>
