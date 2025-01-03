@@ -73,11 +73,6 @@ export class NavbarComponent {
               icon: 'pi pi-fw pi-user',
               routerLink: ['/profile'],
             },
-            {
-              label: 'Settings',
-              icon: 'pi pi-fw pi-cog',
-              routerLink: ['/settings'],
-            },
           ]
         : []),
       {
