@@ -1,44 +1,42 @@
-// src/app/navbar/navbar.component.ts
-import {Component, ViewChild} from '@angular/core';
-import {Menu} from 'primeng/menu';
-import {Router} from '@angular/router';
-import {ImportsModule} from '../imports';
-import {FormsModule} from '@angular/forms';
-import {MenuItem} from 'primeng/api';
-import {Auth, onAuthStateChanged, signOut, User} from '@angular/fire/auth';
+import { Component, NgModule, ViewChild } from '@angular/core';
+
+import { Menu } from 'primeng/menu';
+
+import { Router } from '@angular/router';
+import { ImportsModule } from '../imports';
+import { FormsModule } from '@angular/forms';
+import { MenuItem } from 'primeng/api';
+import { OverlayPanel } from 'primeng/overlaypanel';
+
+import { Auth, onAuthStateChanged, signOut, User } from '@angular/fire/auth';
 
 @Component({
   selector: 'app-navbar',
   standalone: true,
   imports: [FormsModule, ImportsModule],
   templateUrl: './navbar.component.html',
-  styleUrl: './navbar.component.css'
+  styleUrl: './navbar.component.css',
 })
 export class NavbarComponent {
   @ViewChild('profileMenu') profileMenu!: Menu;
 
-  items: MenuItem[];
-  profileItems: MenuItem[];
+  items: MenuItem[]= [];
+  profileItems: MenuItem[]= [];
 
   profileImageUrl: string | null = null;
   isLoggedIn: boolean = false;
+  isFilmmaker: boolean = false;
 
   constructor(private auth: Auth, private router: Router) {
-    this.items = [
-      { label: 'Home', icon: 'pi pi-fw pi-home', routerLink: ['/home'] },
-      { label: 'Product Features', icon: 'pi pi-fw pi-star', routerLink: ['/product-features'] }
-      // other menu items
-    ];
-
-    this.profileItems = [
-      { label: 'Profile', icon: 'pi pi-fw pi-user', routerLink: ['/profile'] },
-      { label: 'Logout', icon: 'pi pi-fw pi-power-off', command: () => this.logout() }
-    ];
-
-    // Listen for auth state changes
     onAuthStateChanged(this.auth, (user: User | null) => {
-      this.isLoggedIn = !!user; // True if user is logged in
-      this.profileImageUrl = user?.photoURL || null; // Set Google profile image if available
+      this.isLoggedIn = !!user;
+      this.profileImageUrl = user?.photoURL || null;
+
+      if (user) {
+        const plan = localStorage.getItem(`subscription_plan_${user.uid}`);
+        this.isFilmmaker = plan === 'Filmmaker'; // Check if the user is a filmmaker
+      }
+
       this.updateMenuItems();
     });
   }
@@ -56,7 +54,7 @@ export class NavbarComponent {
   }
 
   updateMenuItems() {
-    // Dynamically set menu items based on login status
+    // Update the main menu items
     this.items = [
       ...(this.isLoggedIn
         ? [
@@ -65,5 +63,32 @@ export class NavbarComponent {
           ]
         : [{ label: 'Product Features', icon: 'pi pi-fw pi-star', routerLink: ['/product-features'] }]),
     ];
+
+    // Update the profile menu items
+    this.profileItems = [
+      ...(this.isFilmmaker
+        ? [
+            {
+              label: 'Profile',
+              icon: 'pi pi-fw pi-user',
+              routerLink: ['/profile'],
+            },
+            {
+              label: 'Settings',
+              icon: 'pi pi-fw pi-cog',
+              routerLink: ['/settings'],
+            },
+          ]
+        : []),
+      {
+        label: 'Logout',
+        icon: 'pi pi-fw pi-power-off',
+        command: () => this.logout(),
+      },
+    ];
+  }
+
+  toggleSearch(event: any, op: OverlayPanel) {
+    op.toggle(event);
   }
 }
