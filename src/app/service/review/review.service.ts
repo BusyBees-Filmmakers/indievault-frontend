@@ -25,8 +25,7 @@ export class ReviewService {
     { rating: 4, comment: "A must-watch for its emotional depth.", movieId: 6, id: 17, author: "Henry Young" },
     { rating: 3, comment: "Beautiful story but pacing was inconsistent.", movieId: 6, id: 18, author: "Jack Carter" },
     { rating: 4, comment: "Poetic and visually captivating.", movieId: 7, id: 19, author: "Liam Gray" },
-    { rating: 5, comment: "A beautiful meditation on time.", movieId: 7, id: 20, author: "Mia Turner" },
-    { rating: 2, comment: "The concept was intriguing, but the execution fell flat.", movieId: 7, id: 21, author: "Oliver Hunt" }
+    { rating: 5, comment: "A beautiful meditation on time.", movieId: 7, id: 20, author: "Mia Turner" }
   ];
   constructor() { }
 

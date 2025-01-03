@@ -18,7 +18,9 @@
       icon="pi pi-user"
       label="Filmmaker Profile"
       class="p-button-info"
+      *ngIf="movie.title !== 'My Movie'"
     ></a>
+    <p *ngIf="movie.title === 'My Movie'" class="text-sm text-gray-500">You are the filmmaker</p>
   </div>
 
   <div class="mb-4">

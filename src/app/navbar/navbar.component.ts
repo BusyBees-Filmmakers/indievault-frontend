@@ -1,16 +1,11 @@
-import { Component, NgModule, ViewChild } from '@angular/core';
-
-import { Menu } from 'primeng/menu';
-
-import { Router } from '@angular/router';
-import { ImportsModule } from '../imports';
-import { FormsModule } from '@angular/forms';
-import { MenuItem } from 'primeng/api';
-import { OverlayPanel } from 'primeng/overlaypanel';
-
-import { Auth, onAuthStateChanged, signOut, User } from '@angular/fire/auth';
-
-
+// src/app/navbar/navbar.component.ts
+import {Component, ViewChild} from '@angular/core';
+import {Menu} from 'primeng/menu';
+import {Router} from '@angular/router';
+import {ImportsModule} from '../imports';
+import {FormsModule} from '@angular/forms';
+import {MenuItem} from 'primeng/api';
+import {Auth, onAuthStateChanged, signOut, User} from '@angular/fire/auth';
 
 @Component({
   selector: 'app-navbar',
@@ -19,27 +14,24 @@ import { Auth, onAuthStateChanged, signOut, User } from '@angular/fire/auth';
   templateUrl: './navbar.component.html',
   styleUrl: './navbar.component.css'
 })
-
 export class NavbarComponent {
   @ViewChild('profileMenu') profileMenu!: Menu;
 
   items: MenuItem[];
   profileItems: MenuItem[];
 
-  profileImageUrl: string | null = null; 
-  isLoggedIn: boolean = false; 
+  profileImageUrl: string | null = null;
+  isLoggedIn: boolean = false;
 
   constructor(private auth: Auth, private router: Router) {
     this.items = [
       { label: 'Home', icon: 'pi pi-fw pi-home', routerLink: ['/home'] },
-      // { label: 'About', icon: 'pi pi-fw pi-info-circle', routerLink: ['/about'] },
-      // { label: 'Contact Us', icon: 'pi pi-fw pi-envelope', routerLink: ['/contact'] },
+      { label: 'Product Features', icon: 'pi pi-fw pi-star', routerLink: ['/product-features'] }
       // other menu items
     ];
 
     this.profileItems = [
       { label: 'Profile', icon: 'pi pi-fw pi-user', routerLink: ['/profile'] },
-      { label: 'Settings', icon: 'pi pi-fw pi-cog', routerLink: ['/settings'] },
       { label: 'Logout', icon: 'pi pi-fw pi-power-off', command: () => this.logout() }
     ];
 
@@ -56,6 +48,7 @@ export class NavbarComponent {
     signOut(this.auth)
     .then(() => {
       this.router.navigate(['/']); // Redirect to login page
+      localStorage.clear(); // Clear local storage
     })
     .catch(error => {
       console.error('Error during logout:', error);
@@ -66,14 +59,11 @@ export class NavbarComponent {
     // Dynamically set menu items based on login status
     this.items = [
       ...(this.isLoggedIn
-        ? [{ label: 'Home', icon: 'pi pi-fw pi-home', routerLink: ['/home'] }]
-        : []),
+        ? [
+            { label: 'Home', icon: 'pi pi-fw pi-home', routerLink: ['/home'] },
+            { label: 'Product features', icon: 'pi pi-fw pi-star', routerLink: ['/product-features'] }
+          ]
+        : [{ label: 'Product Features', icon: 'pi pi-fw pi-star', routerLink: ['/product-features'] }]),
     ];
   }
-
-  toggleSearch(event: any, op: OverlayPanel) {
-    op.toggle(event);
-  }
-
 }
-
