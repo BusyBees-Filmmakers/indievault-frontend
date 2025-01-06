@@ -17,25 +17,25 @@ import {MovieService} from "../service/movie/movie.service";
 export class HomepageComponent {
   sections: { genre: string, movies: Movie[] }[] = [ {
     genre: 'Selected for You',
-    movies: this.getAllMoviesRandomOrder().slice(0, 5)
+    movies: this.getAllMoviesRandomOrder(false).slice(0, 5)
   },{
     genre: 'Action',
-    movies: this.getAllMoviesRandomOrder()
+    movies: this.getAllMoviesRandomOrder(true)
   },{
     genre: 'Comedy',
-    movies: this.getAllMoviesRandomOrder().slice(0, 4)
+    movies: this.getAllMoviesRandomOrder(false).slice(0, 4)
   },{
     genre: 'Drama',
-    movies: this.getAllMoviesRandomOrder().slice(0, 5)
+    movies: this.getAllMoviesRandomOrder(false).slice(0, 5)
   },{
     genre: 'Horror',
-    movies: this.getAllMoviesRandomOrder().slice(0, 4)
+    movies: this.getAllMoviesRandomOrder(false).slice(0, 4)
   },{
     genre: 'Romance',
-    movies: this.getAllMoviesRandomOrder().slice(0, 4)
+    movies: this.getAllMoviesRandomOrder(false).slice(0, 4)
   },{
     genre: 'Scifi',
-    movies: this.getAllMoviesRandomOrder().slice(0, 5)
+    movies: this.getAllMoviesRandomOrder(false).slice(0, 5)
   }]
   displayMovieDialog: boolean = false;
   selectedMovie: any = null;
@@ -53,7 +53,23 @@ export class HomepageComponent {
     this.selectedMovie = null;
   }
 
-  getAllMoviesRandomOrder(): Movie[] {
-    return this.movieService.getMovieDatabase().sort(() => Math.random() - 0.5);
+  getAllMoviesRandomOrder(isAction: boolean): Movie[] {
+    let movies = this.movieService.getMovieDatabase().sort(() => Math.random() - 0.5);
+    if(isAction && this.myMovieExists() && movies.filter(movie => movie.filmmakerId === 102).length !== this.myMovieCount()) {
+      movies = movies.filter(movie => movie.filmmakerId !== 102);
+      movies = movies.concat(this.movieService.getMoviesByFilmmakerId(102));
+    }  else if(!isAction && this.myMovieExists()) {
+      movies = movies.filter(movie => movie.filmmakerId !== 102);
+    }
+    return movies;
   }
+
+  myMovieExists(): boolean {
+    return this.movieService.getMovieDatabase().some(movie => movie.filmmakerId === 102);
+  }
+
+  myMovieCount(): number {
+    return this.movieService.getMovieDatabase().filter(movie => movie.filmmakerId === 102).length;
+  }
+
 }
