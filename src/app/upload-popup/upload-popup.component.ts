@@ -30,7 +30,7 @@ export class UploadPopupComponent implements OnInit {
   ngOnInit(): void {
     this.uploadForm = this.fb.group({
       name: [{value: 'My Movie', disabled: true}, Validators.required],
-      category: [{value: 'Action', disabled: true}, Validators.required]
+      genre: [{value: 'Action', disabled: true}, Validators.required]
     });
   }
 

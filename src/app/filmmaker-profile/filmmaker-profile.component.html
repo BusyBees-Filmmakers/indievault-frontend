@@ -1,27 +1,31 @@
 <app-navbar class="bg-white-800 text-white shadow-md sticky top-0 z-40"></app-navbar>
 <div class="p-6 bg-gray-800 text-white">
-    <div class="flex flex-col items-center">
-      <div class="absolute top-4 right-4">
-        <!-- <button
-        pButton
-        type="button"
-        label="Upload"
-        icon="pi pi-upload"
-        class="mt-4"
-        (click)="showUploadPopup()"
-        ></button> -->
-      </div>
-      <div
-        class="icon bg-gray-600 rounded-full w-24 h-24 flex items-center justify-center"
-      >
-        <i class="pi pi-user text-4xl"></i>
-      </div>
-        <h2>Filmmaker Name</h2>
-        <p>Lorem, ipsum.</p>
-        <h2>Brief Description</h2>
-        <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Ad maiores minus expedita illum!</p>
-      <h2>Movie Feed</h2>
-      <div *ngFor="let section of sections" class="movie-feed mt-6 w-full">
+  <div class="flex flex-col items-center">
+    <div class="absolute top-4 right-4">
+      <!-- <button
+      pButton
+      type="button"
+      label="Upload"
+      icon="pi pi-upload"
+      class="mt-4"
+      (click)="showUploadPopup()"
+      ></button> -->
+    </div>
+    <div
+      class="icon bg-gray-600 rounded-full w-24 h-24 flex items-center justify-center overflow-hidden"
+    >
+      <img src="https://randomuser.me/api/portraits/men/32.jpg" alt="Filmmaker Profile Picture"
+           class="w-full h-full object-cover"/>
+    </div>
+    <h2>John Doe</h2>
+    <p>Independent filmmaker with a passion for storytelling and visual arts.</p>
+    <h2>Brief Description</h2>
+    <p>I have been creating short films for over a decade, focusing on themes of human connection and the beauty of
+      everyday moments.</p>
+    <h2>Movie Feed</h2>
+    <div *ngFor="let section of sections" class="movie-feed mt-6 w-full">
+      <h1 class="text-4xl font-extrabold mb-8 text-gray-200">{{ section.genre }}</h1>
+      <div class="mb-12">
         <p-carousel
           [value]="section.movies"
           [numVisible]="4"
@@ -35,7 +39,7 @@
               (click)="showMovieInfo(movie)"
             >
               <img
-                src="https://via.placeholder.com/150"
+                src="{{ movie.posterUrl }}"
                 alt="{{ movie.title }} Poster"
                 class="w-full h-40 object-cover rounded-t"
               />
@@ -48,26 +52,26 @@
       </div>
     </div>
   </div>
-  
-  <p-dialog
+</div>
+
+<p-dialog
   header="Movie Info"
   [(visible)]="displayMovieDialog"
   [modal]="true"
   [style]="{ width: '50vw' }"
-  [draggable]="false" 
+  [draggable]="false"
   [resizable]="false"
   class="rounded-lg shadow-lg"
   (onHide)="onDialogHide()"
-  >
+>
   <app-movie-info [movie]="selectedMovie" class="p-4"></app-movie-info>
-  </p-dialog>
-  
-  <!-- <p-dialog
-    header="Upload a Movie"
-    [(visible)]="displayUploadPopup"
-    [modal]="true"
-    [style]="{ width: '400px' }"
-  >
-    <app-upload-popup></app-upload-popup>
-  </p-dialog> -->
-  
+</p-dialog>
+
+<!-- <p-dialog
+  header="Upload a Movie"
+  [(visible)]="displayUploadPopup"
+  [modal]="true"
+  [style]="{ width: '400px' }"
+>
+  <app-upload-popup></app-upload-popup>
+</p-dialog> -->

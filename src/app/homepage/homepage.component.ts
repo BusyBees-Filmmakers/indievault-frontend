@@ -1,11 +1,9 @@
-import {Component, NgModule, OnInit} from '@angular/core';
+import {Component} from '@angular/core';
 
-import { BrowserModule } from '@angular/platform-browser';
-
-import { CommonModule } from '@angular/common';
-import { ImportsModule } from '../imports';
-import { MovieInfoComponent } from '../movie-info/movie-info.component';
-import { NavbarComponent } from '../navbar/navbar.component';
+import {CommonModule} from '@angular/common';
+import {ImportsModule} from '../imports';
+import {MovieInfoComponent} from '../movie-info/movie-info.component';
+import {NavbarComponent} from '../navbar/navbar.component';
 import {Movie} from "../common/interface/movie";
 import {MovieService} from "../service/movie/movie.service";
 
@@ -17,12 +15,32 @@ import {MovieService} from "../service/movie/movie.service";
   styleUrls: ['./homepage.component.css'],
 })
 export class HomepageComponent {
-  movies: Movie[] = []
+  sections: { genre: string, movies: Movie[] }[] = [ {
+    genre: 'Selected for You',
+    movies: this.getAllMoviesRandomOrder().slice(0, 5)
+  },{
+    genre: 'Action',
+    movies: this.getAllMoviesRandomOrder()
+  },{
+    genre: 'Comedy',
+    movies: this.getAllMoviesRandomOrder().slice(0, 4)
+  },{
+    genre: 'Drama',
+    movies: this.getAllMoviesRandomOrder().slice(0, 5)
+  },{
+    genre: 'Horror',
+    movies: this.getAllMoviesRandomOrder().slice(0, 4)
+  },{
+    genre: 'Romance',
+    movies: this.getAllMoviesRandomOrder().slice(0, 4)
+  },{
+    genre: 'Scifi',
+    movies: this.getAllMoviesRandomOrder().slice(0, 5)
+  }]
   displayMovieDialog: boolean = false;
   selectedMovie: any = null;
 
   constructor(private movieService: MovieService) {
-    this.movies = this.movieService.getMovieDatabase();
   }
 
   showMovieInfo(movie: any) {
@@ -33,5 +51,9 @@ export class HomepageComponent {
   onDialogHide() {
     this.displayMovieDialog = false;
     this.selectedMovie = null;
+  }
+
+  getAllMoviesRandomOrder(): Movie[] {
+    return this.movieService.getMovieDatabase().sort(() => Math.random() - 0.5);
   }
 }

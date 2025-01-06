@@ -2,37 +2,11 @@
   <app-navbar class="bg-gray-800 text-white shadow-md sticky top-0 z-40"></app-navbar>
 
   <div class="container mx-auto p-4 mt-16">
-    <h1 class="text-4xl font-extrabold mb-8 text-gray-200">Selected for You</h1>
-    <div class="mb-12">
-      <p-carousel
-        [value]="movies.slice(0,5)"
-        [numVisible]="4"
-        [numScroll]="1"
-        [circular]="true"
-        class="movie-carousel"
-      >
-        <ng-template let-movie pTemplate="item">
-          <div
-            class="movie-item shadow-lg hover:shadow-2xl transition-shadow duration-300 cursor-pointer rounded overflow-hidden bg-gray-800 mx-4"
-            (click)="showMovieInfo(movie)"
-          >
-            <img
-              src="{{ movie.posterUrl }}"
-              alt="{{ movie.title }} Poster"
-              class="w-full h-40 object-cover rounded-t"
-            />
-            <div class="text-center p-4 text-gray-200">
-              <h3 class="font-semibold text-lg">{{ movie.title }}</h3>
-            </div>
-          </div>
-        </ng-template>
-      </p-carousel>
-    </div>
-    <div class="container mx-auto p-4 mt-16">
-      <h1 class="text-4xl font-extrabold mb-8 text-gray-200">Action</h1>
+    <div *ngFor="let section of sections">
+      <h1 class="text-4xl font-extrabold mb-8 text-gray-200">{{ section.genre }}</h1>
       <div class="mb-12">
         <p-carousel
-          [value]="movies"
+          [value]="section.movies"
           [numVisible]="4"
           [numScroll]="1"
           [circular]="true"
@@ -55,21 +29,19 @@
           </ng-template>
         </p-carousel>
       </div>
-
-      <p-dialog
-        header="Movie Info"
-        [(visible)]="displayMovieDialog"
-        [modal]="true"
-        [style]="{ width: '50vw' }"
-        [draggable]="false"
-        [resizable]="false"
-        class="rounded-lg shadow-lg"
-        (onHide)="onDialogHide()"
-      >
-        <app-movie-info [movie]="selectedMovie" class="p-4"></app-movie-info>
-      </p-dialog>
-
-
     </div>
+
+    <p-dialog
+      header="Movie Info"
+      [(visible)]="displayMovieDialog"
+      [modal]="true"
+      [style]="{ width: '50vw' }"
+      [draggable]="false"
+      [resizable]="false"
+      class="rounded-lg shadow-lg"
+      (onHide)="onDialogHide()"
+    >
+      <app-movie-info [movie]="selectedMovie" class="p-4"></app-movie-info>
+    </p-dialog>
   </div>
 </div>
