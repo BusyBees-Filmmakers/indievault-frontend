@@ -1,40 +1,53 @@
 import { Component, NgModule, ViewChild } from '@angular/core';
-
 import { Menu } from 'primeng/menu';
-
 import { Router } from '@angular/router';
-import { ImportsModule } from '../imports';
-import { FormsModule } from '@angular/forms';
-import { MenuItem } from 'primeng/api';
-import { OverlayPanel } from 'primeng/overlaypanel';
-
 import { Auth, onAuthStateChanged, signOut, User } from '@angular/fire/auth';
+import { MovieService } from '../service/movie/movie.service';
+import { SharedService } from '../service/shared.service';
+import { FormsModule } from '@angular/forms';
+import { ImportsModule } from '../imports';
+import { MenuItem } from 'primeng/api';
 
 @Component({
   selector: 'app-navbar',
   standalone: true,
   imports: [FormsModule, ImportsModule],
   templateUrl: './navbar.component.html',
-  styleUrl: './navbar.component.css',
+  styleUrls: ['./navbar.component.css'],
 })
 export class NavbarComponent {
   @ViewChild('profileMenu') profileMenu!: Menu;
 
-  items: MenuItem[]= [];
-  profileItems: MenuItem[]= [];
+  items: MenuItem[] = [];
+  profileItems: MenuItem[] = [];
 
   profileImageUrl: string | null = null;
   isLoggedIn: boolean = false;
   isFilmmaker: boolean = false;
 
-  constructor(private auth: Auth, private router: Router) {
+  searchQuery: string = ''; // Search query for filtering
+
+  constructor(
+    private auth: Auth,
+    private router: Router,
+    private movieService: MovieService,
+    private sharedService: SharedService // Inject shared service
+  ) {
+    // Check user authentication and update profile
     onAuthStateChanged(this.auth, (user: User | null) => {
       this.isLoggedIn = !!user;
       this.profileImageUrl = user?.photoURL || null;
 
       if (user) {
         const plan = localStorage.getItem(`subscription_plan_${user.uid}`);
-        this.isFilmmaker = plan === 'Filmmaker'; // Check if the user is a filmmaker
+        this.isFilmmaker = plan === 'Filmmaker';
+
+        // Update shared service with user profile data
+        this.sharedService.updateUserProfile({
+          userName: user.displayName,
+          userProfilePic: user.photoURL,
+          isFilmmaker: this.isFilmmaker,
+        });
       }
 
       this.updateMenuItems();
@@ -42,29 +55,36 @@ export class NavbarComponent {
   }
 
   logout() {
-    // Implement logout functionality
     signOut(this.auth)
-    .then(() => {
-      this.router.navigate(['/']); // Redirect to login page
-      localStorage.clear(); // Clear local storage
-    })
-    .catch(error => {
-      console.error('Error during logout:', error);
-    });
+      .then(() => {
+        this.router.navigate(['/']);
+        localStorage.clear();
+      })
+      .catch((error) => {
+        console.error('Error during logout:', error);
+      });
   }
 
   updateMenuItems() {
-    // Update the main menu items
     this.items = [
       ...(this.isLoggedIn
         ? [
-            { label: 'Home', icon: 'pi pi-fw pi-home', routerLink: ['/home'] },
-            { label: 'Product features', icon: 'pi pi-fw pi-star', routerLink: ['/product-features'] }
+            { label: 'Home', icon: 'pi pi-fw pi-home', routerLink: ['/home'], command: () => this.showAllMovies() },
+            {
+              label: 'Product features',
+              icon: 'pi pi-fw pi-star',
+              routerLink: ['/product-features'],
+            },
           ]
-        : [{ label: 'Product Features', icon: 'pi pi-fw pi-star', routerLink: ['/product-features'] }]),
+        : [
+            {
+              label: 'Product Features',
+              icon: 'pi pi-fw pi-star',
+              routerLink: ['/product-features'],
+            },
+          ]),
     ];
 
-    // Update the profile menu items
     this.profileItems = [
       ...(this.isFilmmaker
         ? [
@@ -83,7 +103,20 @@ export class NavbarComponent {
     ];
   }
 
-  toggleSearch(event: any, op: OverlayPanel) {
-    op.toggle(event);
+  onSearch() {
+    const query = this.searchQuery.toLowerCase();
+    const allMovies = this.movieService.getMovieDatabase();
+    const filteredMovies = allMovies.filter(
+      (movie) => movie.title.toLowerCase().includes(query)
+    );
+
+    // Update shared service with filtered movies
+    this.sharedService.updateMovies(filteredMovies);
+  }
+
+  showAllMovies() {
+    // Reset to show all movies
+    const allMovies = this.movieService.getMovieDatabase();
+    this.sharedService.updateMovies([]);
   }
 }
