@@ -19,6 +19,7 @@ export class HomepageComponent implements OnInit {
   originalSections: { genre: string; movies: Movie[] }[] = [];
   displayMovieDialog: boolean = false;
   selectedMovie: any = null;
+  noResults: boolean = false;
 
   constructor(
     private sharedService: SharedService,
@@ -59,21 +60,34 @@ export class HomepageComponent implements OnInit {
     ];
     this.sections = [...this.originalSections];
 
-    // Subscribe to filtered movies from the shared service
+    // Subscribe to shared service for updates
     this.sharedService.movies$.subscribe((filteredMovies) => {
       if (filteredMovies.length > 0) {
-        // Only show the filtered movies
+        // Show filtered movies if search matches
+        this.noResults = false;
         this.sections = [
           {
             genre: 'Search Results',
-            movies: filteredMovies, // Display only the filtered movies
+            movies: filteredMovies,
           },
         ];
+      } else if (this.noResults) {
+        // Show "No Results" if no matches are found
+        this.sections = [];
       } else {
-        // Reset to original sections if no filtered movies
+        // Reset to original sections when no search query is active
+        this.noResults = false;
         this.sections = [...this.originalSections];
       }
     });
+
+    this.sharedService.noResults$.subscribe((noResults) => {
+      this.noResults = noResults;
+    });
+
+    // Reset to default state on initial load
+    this.sharedService.updateMovies([]);
+    this.sharedService.updateNoResults(false);
   }
 
   showMovieInfo(movie: any) {

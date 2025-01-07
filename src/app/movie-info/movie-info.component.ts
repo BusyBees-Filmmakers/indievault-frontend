@@ -20,7 +20,7 @@ export class MovieInfoComponent {
   newReview: Review = {
     id: 0, // Will be dynamically assigned
     movieId: 0,
-    author: 'Anonymous', // Default author, can be replaced by logged-in user info
+    author: 'Jhon Doe', // Default author, can be replaced by logged-in user info
     rating: 0,
     comment: '',
   };

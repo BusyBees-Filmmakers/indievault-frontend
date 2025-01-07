@@ -26,6 +26,7 @@ export class NavbarComponent {
   isFilmmaker: boolean = false;
 
   searchQuery: string = ''; // Search query for filtering
+  noResults: boolean = false;
 
   constructor(
     private auth: Auth,
@@ -69,7 +70,6 @@ export class NavbarComponent {
     this.items = [
       ...(this.isLoggedIn
         ? [
-            { label: 'Home', icon: 'pi pi-fw pi-home', routerLink: ['/home'], command: () => this.showAllMovies() },
             {
               label: 'Product features',
               icon: 'pi pi-fw pi-star',
@@ -103,20 +103,46 @@ export class NavbarComponent {
     ];
   }
 
-  onSearch() {
-    const query = this.searchQuery.toLowerCase();
+  async onSearch() {
+    // Reset noResults flag initially
+    this.sharedService.updateNoResults(false);
+
+    // Add a 500ms delay
+    await new Promise((resolve) => setTimeout(resolve, 500));
+
+    const query = this.searchQuery.toLowerCase().trim();
+
+    if (!query) {
+      // If the query is empty, reset to show all movies
+      this.showAllMovies();
+      return;
+    }
+
+    // Retrieve all movies and filter based on query
     const allMovies = this.movieService.getMovieDatabase();
     const filteredMovies = allMovies.filter(
-      (movie) => movie.title.toLowerCase().includes(query)
+      (movie) =>
+        movie.title.toLowerCase().includes(query) ||
+        movie.description.toLowerCase().includes(query) ||
+        (movie.genre && movie.genre.toLowerCase().includes(query))
     );
 
-    // Update shared service with filtered movies
-    this.sharedService.updateMovies(filteredMovies);
+    if (filteredMovies.length === 0) {
+      // If no matches, update noResults flag
+      this.sharedService.updateNoResults(true);
+    } else {
+      // Otherwise, update the shared service with filtered movies
+      this.sharedService.updateMovies(filteredMovies);
+    }
   }
 
   showAllMovies() {
-    // Reset to show all movies
+    // Reset the shared service state
+    this.sharedService.resetState();
+  
+    // Retrieve all movies from the service and update the shared state
     const allMovies = this.movieService.getMovieDatabase();
-    this.sharedService.updateMovies([]);
+    this.sharedService.updateMovies(allMovies);
   }
+  
 }

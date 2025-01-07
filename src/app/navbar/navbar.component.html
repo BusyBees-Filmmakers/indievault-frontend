@@ -18,7 +18,7 @@
           placeholder="Search movies"
           class="border-0 rounded-l-md"
           [(ngModel)]="searchQuery"
-          (input)="onSearch()"
+          (keydown.enter)="onSearch()"
         />
         <button
           type="button"
