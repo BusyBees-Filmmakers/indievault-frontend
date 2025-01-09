@@ -25,21 +25,31 @@ export class ProductShowcasePageComponent {
 
   auth = inject(Auth);
 
-  features = [
+  showcase = [
     {
       title: 'Watch movies',
       description: 'Movies from your favourite independent filmmakers',
-      gifUri: 'assets/feature1.gif' // gif off homepage
+      gifUri: 'assets/features/feature1.gif' // gif off homepage
     },
     {
       title: 'Each of our films has a story to tell',
-      description: 'Each movie has description, cast, and reviews',
-      gifUri: 'assets/feature2.gif' //gif of movie info view
+      description: 'Each movie has description, cast, and reviews. You can even leave your own review!',
+      gifUri: 'assets/features/feature2.gif' //gif of movie info view
     },
     {
       title: 'If you are a filmmaker, you can showcase your work',
       description: 'Go to your profile and upload your movies!',
-      gifUri: 'assets/feature3.gif' //gif of uploading a movie
+      gifUri: 'assets/features/feature3.gif' //gif of uploading a movie
+    },
+    {
+      title: 'Explore our ever-growing library',
+      description: 'Browse through various movie categories to find your favorite genre. We even have a section for movies selected just for you!',
+      gifUri: 'assets/features/feature4.gif' // gif of category browsing
+    },
+    {
+      title: 'Find exactly what you are looking for',
+      description: 'Use our search feature to find movies quickly and easily.',
+      gifUri: 'assets/features/feature5.gif' // gif of search functionality
     }
   ];
 

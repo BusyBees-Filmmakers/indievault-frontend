@@ -3,15 +3,16 @@ import { Menu } from 'primeng/menu';
 import { Router } from '@angular/router';
 import { Auth, onAuthStateChanged, signOut, User } from '@angular/fire/auth';
 import { MovieService } from '../service/movie/movie.service';
-import { SharedService } from '../service/shared.service';
+import { SharedService } from '../service/shared/shared.service';
 import { FormsModule } from '@angular/forms';
 import { ImportsModule } from '../imports';
 import { MenuItem } from 'primeng/api';
+import {AvatarModule} from "primeng/avatar";
 
 @Component({
   selector: 'app-navbar',
   standalone: true,
-  imports: [FormsModule, ImportsModule],
+  imports: [FormsModule, ImportsModule, AvatarModule],
   templateUrl: './navbar.component.html',
   styleUrls: ['./navbar.component.css'],
 })
@@ -25,19 +26,18 @@ export class NavbarComponent {
   isLoggedIn: boolean = false;
   isFilmmaker: boolean = false;
 
-  searchQuery: string = ''; // Search query for filtering
-  noResults: boolean = false;
+  searchQuery: string = '';
 
   constructor(
     private auth: Auth,
     private router: Router,
     private movieService: MovieService,
-    private sharedService: SharedService // Inject shared service
+    private sharedService: SharedService
   ) {
     // Check user authentication and update profile
     onAuthStateChanged(this.auth, (user: User | null) => {
       this.isLoggedIn = !!user;
-      this.profileImageUrl = user?.photoURL || null;
+      this.profileImageUrl = user?.photoURL ?? null;
 
       if (user) {
         const plan = localStorage.getItem(`subscription_plan_${user.uid}`);
@@ -70,11 +70,29 @@ export class NavbarComponent {
     this.items = [
       ...(this.isLoggedIn
         ? [
+          {
+            label: 'Home',
+            icon: 'pi pi-fw pi-home',
+            routerLink: ['/home'],
+          },
             {
               label: 'Product features',
               icon: 'pi pi-fw pi-star',
               routerLink: ['/product-features'],
             },
+          {
+            label: 'Categories',
+            icon: 'pi pi-fw pi-list',
+            items: [
+              { label: 'Selected for You', routerLink: ['/category/selected-for-you'] },
+              { label: 'Action', routerLink: ['/category/action'] },
+              { label: 'Comedy', routerLink: ['/category/comedy'] },
+              { label: 'Drama', routerLink: ['/category/drama'] },
+              { label: 'Horror', routerLink: ['/category/horror'] },
+              { label: 'Romance', routerLink: ['/category/romance'] },
+              { label: 'Scifi', routerLink: ['/category/scifi'] },
+            ],
+          },
           ]
         : [
             {
@@ -139,10 +157,10 @@ export class NavbarComponent {
   showAllMovies() {
     // Reset the shared service state
     this.sharedService.resetState();
-  
+
     // Retrieve all movies from the service and update the shared state
     const allMovies = this.movieService.getMovieDatabase();
     this.sharedService.updateMovies(allMovies);
   }
-  
+
 }

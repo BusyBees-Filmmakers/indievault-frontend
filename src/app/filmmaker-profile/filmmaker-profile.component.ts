@@ -5,11 +5,12 @@ import { MovieInfoComponent } from '../movie-info/movie-info.component';
 import { NavbarComponent } from "../navbar/navbar.component";
 import { Movie } from '../common/interface/movie';
 import { MovieService } from '../service/movie/movie.service';
+import {AvatarModule} from "primeng/avatar";
 
 @Component({
   selector: 'app-filmmaker-profile',
   standalone: true,
-  imports: [ImportsModule, UploadPopupComponent, MovieInfoComponent, NavbarComponent],
+  imports: [ImportsModule, UploadPopupComponent, MovieInfoComponent, NavbarComponent, AvatarModule],
   templateUrl: './filmmaker-profile.component.html',
   styleUrl: './filmmaker-profile.component.css',
 })

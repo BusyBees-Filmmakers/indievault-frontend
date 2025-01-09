@@ -6,6 +6,7 @@ import { MovieInfoComponent } from '../movie-info/movie-info.component';
 import { NavbarComponent } from '../navbar/navbar.component';
 import { MovieService } from '../service/movie/movie.service';
 import { Movie } from '../common/interface/movie';
+import {AvatarModule} from "primeng/avatar";
 
 @Component({
   selector: 'app-profile',
@@ -15,6 +16,7 @@ import { Movie } from '../common/interface/movie';
     UploadPopupComponent,
     MovieInfoComponent,
     NavbarComponent,
+    AvatarModule,
   ],
   templateUrl: './profile.component.html',
   styleUrl: './profile.component.css',
@@ -24,7 +26,7 @@ export class ProfileComponent implements OnInit {
   displayMovieDialog: boolean = false;
   selectedMovie: any = null;
   userName: string | null = null;
-  userProfilePic: string | null = null;
+  userProfilePhotoURL: string | null = null;
   movies: Movie[] = [];
   isFilmmaker: boolean = false;
 
@@ -34,7 +36,7 @@ export class ProfileComponent implements OnInit {
     onAuthStateChanged(this.auth, (user: User | null) => {
       if (user) {
         this.userName = user.displayName;
-        this.userProfilePic = user.photoURL;
+        this.userProfilePhotoURL = user.photoURL;
         const subscriptionPlan = localStorage.getItem(`subscription_plan_${user.uid}`);
         this.isFilmmaker = subscriptionPlan === 'Filmmaker';
         if (this.isFilmmaker) {

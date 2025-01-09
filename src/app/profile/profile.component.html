@@ -20,12 +20,13 @@
     <div
       class="icon bg-gray-600 rounded-full w-24 h-24 flex items-center justify-center overflow-hidden"
     >
-      <img
-        *ngIf="userProfilePic; else defaultProfile"
-        [src]="userProfilePic"
-        alt="Profile Picture"
-        class="w-full h-full object-cover"
-      />
+      <p-avatar
+        *ngIf="userProfilePhotoURL; else defaultProfile"
+        [image]="userProfilePhotoURL"
+        class="mr-2"
+        size="xlarge"
+        shape="circle"
+      ></p-avatar>
       <ng-template #defaultProfile>
         <i class="pi pi-user text-4xl"></i>
       </ng-template>

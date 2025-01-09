@@ -4,8 +4,9 @@ import { ImportsModule } from '../imports';
 import { MovieInfoComponent } from '../movie-info/movie-info.component';
 import { NavbarComponent } from '../navbar/navbar.component';
 import { Movie } from '../common/interface/movie';
-import { SharedService } from '../service/shared.service';
+import { SharedService } from '../service/shared/shared.service';
 import { MovieService } from '../service/movie/movie.service';
+import {Router} from "@angular/router";
 
 @Component({
   selector: 'app-homepage',
@@ -23,8 +24,15 @@ export class HomepageComponent implements OnInit {
 
   constructor(
     private sharedService: SharedService,
-    private movieService: MovieService
-  ) {}
+    private movieService: MovieService,
+    private router: Router
+  ) {
+    this.router.events.subscribe(() => {
+      if (this.router.url.includes('home')) {
+        this.showAllMovies();
+      }
+    });
+  }
 
   ngOnInit() {
     // Initialize original sections with all movies
@@ -130,5 +138,19 @@ export class HomepageComponent implements OnInit {
     return this.movieService
       .getMovieDatabase()
       .filter((movie) => movie.filmmakerId === 102).length;
+  }
+
+  resetState() {
+    this.sharedService.resetState();
+    this.sections = [...this.originalSections];
+  }
+
+  showAllMovies() {
+    // Reset the shared service state
+    this.sharedService.resetState();
+
+    // Retrieve all movies from the service and update the shared state
+    const allMovies = this.movieService.getMovieDatabase();
+    this.sharedService.updateMovies(allMovies);
   }
 }

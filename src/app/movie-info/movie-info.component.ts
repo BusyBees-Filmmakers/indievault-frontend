@@ -1,10 +1,11 @@
-import { Component, Input } from '@angular/core';
+import {Component, Input, OnInit} from '@angular/core';
 import { ImportsModule } from '../imports';
 import { DynamicIframeComponent } from '../common/dynamic-iframe/dynamic-iframe.component';
 import { RatingModule } from 'primeng/rating';
 import { Movie } from '../common/interface/movie';
 import { Review } from '../common/interface/review';
 import { ReviewService } from '../service/review/review.service';
+import {AuthService} from "../service/authentication/auth.service";
 
 @Component({
   selector: 'app-movie-info',
@@ -13,19 +14,20 @@ import { ReviewService } from '../service/review/review.service';
   templateUrl: './movie-info.component.html',
   styleUrls: ['./movie-info.component.css'],
 })
-export class MovieInfoComponent {
+export class MovieInfoComponent{
   @Input() movie: Movie | null = null;
+
 
   // Object to hold the new review data
   newReview: Review = {
     id: 0, // Will be dynamically assigned
     movieId: 0,
-    author: 'Jhon Doe', // Default author, can be replaced by logged-in user info
+    author: 'John Doe',
     rating: 0,
     comment: '',
   };
 
-  constructor(private reviewService: ReviewService) {}
+  constructor(private reviewService: ReviewService, private authService: AuthService) {}
 
   // Fetch reviews for the current movie
   getReviews() {
@@ -40,6 +42,7 @@ export class MovieInfoComponent {
     this.newReview.movieId = this.movie.id;
     const maxId = Math.max(...this.reviewService.getReviews().map((r) => r.id), 0);
     this.newReview.id = maxId + 1;
+    this.newReview.author = this.authService.getCurrentFireUser()?.displayName ?? 'John Doe';
 
     // Add the review to the service
     this.reviewService.addReview({ ...this.newReview });
@@ -48,9 +51,10 @@ export class MovieInfoComponent {
     this.newReview = {
       id: 0,
       movieId: 0,
-      author: 'Jhon Doe',
+      author: 'John Doe',
       rating: 0,
       comment: '',
     };
   }
+
 }

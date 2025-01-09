@@ -10,10 +10,10 @@
 
   <!-- Features Section -->
   <section class="w-full space-y-8 flex flex-col items-center">
-    <div *ngFor="let feature of features" class="p-4 border rounded-lg w-full max-w-4xl text-center">
+    <div *ngFor="let feature of showcase" class="p-4 border rounded-lg w-full max-w-4xl text-center">
       <h3 class="text-2xl font-bold mb-4">{{ feature.title }}</h3>
       <p class="text-white-600 mb-6">{{ feature.description }}</p>
-      <img [src]="feature.gifUri" [alt]="feature.title + ' GIF'" class="w-full h-auto rounded-lg">
+      <img [src]="feature.gifUri" [alt]="feature.title + ' GIF'" class="showcase-gif">
     </div>
   </section>
 

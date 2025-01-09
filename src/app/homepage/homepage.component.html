@@ -1,3 +1,4 @@
+<!-- src/app/homepage/homepage.component.html -->
 <div>
   <app-navbar class="bg-gray-800 text-white shadow-md sticky top-0 z-40"></app-navbar>
 
@@ -6,6 +7,11 @@
     <div *ngIf="noResults" class="text-center text-white bg-red-600 p-4 rounded-lg">
       <h1 class="text-2xl font-bold">No Results Found</h1>
       <p>We couldn't find any movies matching your search.</p>
+    </div>
+
+    <!-- Reset button for search results -->
+    <div *ngIf="sections.length === 1 && sections[0].genre === 'Search Results'" class="text-center mb-4">
+      <p-button label="Return" severity="info" [rounded]="true" (click)="resetState()"></p-button>
     </div>
 
     <!-- Movie sections -->

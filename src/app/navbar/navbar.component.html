@@ -37,12 +37,13 @@
         class="p-button-rounded p-button-text cursor-pointer"
         (click)="profileMenu.toggle($event)"
       >
-        <img
-          *ngIf="isLoggedIn; else defaultProfile"
-          [src]="profileImageUrl"
-          alt="Google Profile"
-          class="w-10 h-10 rounded-full"
-        />
+        <p-avatar
+          *ngIf="profileImageUrl; else defaultProfile"
+          [image]="profileImageUrl"
+          class="w-10 h-10"
+          size="large"
+          shape="circle"
+        ></p-avatar>
         <ng-template #defaultProfile>
           <i class="pi pi-user text-2xl"></i>
         </ng-template>
