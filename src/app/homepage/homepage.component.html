@@ -9,10 +9,6 @@
       <p>We couldn't find any movies matching your search.</p>
     </div>
 
-    <!-- Reset button for search results -->
-    <div *ngIf="sections.length === 1 && sections[0].genre === 'Search Results'" class="text-center mb-4">
-      <p-button label="Return" severity="info" [rounded]="true" (click)="resetState()"></p-button>
-    </div>
 
     <!-- Movie sections -->
     <div *ngIf="!noResults">
@@ -46,6 +42,12 @@
           </p-carousel>
         </div>
       </div>
+    </div>
+
+    <br>
+    <!-- Reset button for search results -->
+    <div *ngIf="(sections.length === 1 && sections[0].genre === 'Search Results') || noResults" class="text-center mb-4">
+      <p-button label="Return" severity="info" [rounded]="true" (click)="resetState()"></p-button>
     </div>
 
     <!-- Movie Info Dialog -->

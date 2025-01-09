@@ -6,7 +6,7 @@ import { NavbarComponent } from '../navbar/navbar.component';
 import { Movie } from '../common/interface/movie';
 import { SharedService } from '../service/shared/shared.service';
 import { MovieService } from '../service/movie/movie.service';
-import {Router} from "@angular/router";
+import { Router, NavigationEnd } from '@angular/router';
 
 @Component({
   selector: 'app-homepage',
@@ -27,8 +27,8 @@ export class HomepageComponent implements OnInit {
     private movieService: MovieService,
     private router: Router
   ) {
-    this.router.events.subscribe(() => {
-      if (this.router.url.includes('home')) {
+    this.router.events.subscribe((event) => {
+      if (event instanceof NavigationEnd && this.router.url.includes('home')) {
         this.showAllMovies();
       }
     });
