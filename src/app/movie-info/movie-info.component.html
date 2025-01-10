@@ -1,7 +1,9 @@
 <div *ngIf="movie" class="p-6 bg-gray-800 text-white rounded-lg shadow-lg">
+  <!-- Movie Title -->
   <h2 class="text-2xl font-bold mb-4">{{ movie.title }}</h2>
   <p class="mb-4">{{ movie.info }}</p>
 
+  <!-- Play Movie and Filmmaker Profile -->
   <div class="flex justify-between items-center mb-4">
     <button
       pButton
@@ -18,19 +20,24 @@
       icon="pi pi-user"
       label="Filmmaker Profile"
       class="p-button-info"
+      *ngIf="movie.title !== 'My Movie'"
     ></a>
+    <p *ngIf="movie.title === 'My Movie'" class="text-sm text-gray-500">You are the filmmaker</p>
   </div>
 
+  <!-- Movie Description -->
   <div class="mb-4">
     <h3 class="text-xl font-semibold">Description</h3>
     <p>{{ movie.description }}</p>
   </div>
 
+  <!-- Movie Trailer -->
   <div class="mb-4">
     <h3 class="text-xl font-semibold">Trailer</h3>
-    <app-dynamic-iframe videoId="CXhnPLMIET0"></app-dynamic-iframe>
+    <app-dynamic-iframe [videoId]="movie.youtubeId"></app-dynamic-iframe>
   </div>
 
+  <!-- TabView for Info, Credits, and Reviews -->
   <p-tabView>
     <!-- Info Tab -->
     <p-tabPanel header="Info">
@@ -49,8 +56,9 @@
 
     <!-- Reviews Tab -->
     <p-tabPanel header="Reviews">
-      <h3 class="text-lg fontF-semibold mb-4">Reviews</h3>
-      <div *ngFor="let review of this.getReviews()" class="mb-6">
+      <!-- Display Existing Reviews -->
+      <h3 class="text-lg font-semibold mb-4">Reviews</h3>
+      <div *ngFor="let review of getReviews()" class="mb-6">
         <div class="flex items-center mb-2">
           <span class="font-semibold mr-2">{{ review.author }}</span>
           <p-rating
@@ -62,6 +70,35 @@
           ></p-rating>
         </div>
         <p class="ml-6">"{{ review.comment }}"</p>
+      </div>
+
+      <!-- Add Review Section -->
+      <h3 class="text-lg font-semibold mt-6">Add a Review</h3>
+      <div class="mb-4">
+        <!-- Star Rating -->
+        <p-rating
+          [(ngModel)]="newReview.rating"
+          stars="5"
+          [cancel]="false"
+          class="flex mb-2"
+        ></p-rating>
+
+        <!-- Comment Input -->
+        <textarea
+          [(ngModel)]="newReview.comment"
+          rows="3"
+          class="w-full p-2 border border-gray-700 rounded"
+          placeholder="Write your review here..."
+        ></textarea>
+
+        <!-- Submit Review Button -->
+        <button
+          pButton
+          type="button"
+          label="Submit Review"
+          class="p-button-success mt-2"
+          (click)="submitReview()"
+        ></button>
       </div>
     </p-tabPanel>
   </p-tabView>

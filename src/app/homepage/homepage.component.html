@@ -1,75 +1,67 @@
+<!-- src/app/homepage/homepage.component.html -->
 <div>
   <app-navbar class="bg-gray-800 text-white shadow-md sticky top-0 z-40"></app-navbar>
 
   <div class="container mx-auto p-4 mt-16">
-    <h1 class="text-4xl font-extrabold mb-8 text-gray-200">Selected for You</h1>
-    <div class="mb-12">
-      <p-carousel
-        [value]="movies.slice(0,5)"
-        [numVisible]="4"
-        [numScroll]="1"
-        [circular]="true"
-        class="movie-carousel"
-      >
-        <ng-template let-movie pTemplate="item">
-          <div
-            class="movie-item shadow-lg hover:shadow-2xl transition-shadow duration-300 cursor-pointer rounded overflow-hidden bg-gray-800 mx-4"
-            (click)="showMovieInfo(movie)"
+    <!-- Show "No Results Found" if no results -->
+    <div *ngIf="noResults" class="text-center text-white bg-red-600 p-4 rounded-lg">
+      <h1 class="text-2xl font-bold">No Results Found</h1>
+      <p>We couldn't find any movies matching your search.</p>
+    </div>
+
+
+    <!-- Movie sections -->
+    <div *ngIf="!noResults">
+      <div *ngFor="let section of sections">
+        <h1 class="text-4xl font-extrabold mb-8 text-gray-200">
+          {{ section.genre }}
+        </h1>
+        <div class="mb-12">
+          <p-carousel
+            [value]="section.movies"
+            [numVisible]="4"
+            [numScroll]="1"
+            [circular]="true"
+            class="movie-carousel"
           >
-            <img
-              src="{{ movie.posterUrl }}"
-              alt="{{ movie.title }} Poster"
-              class="w-full h-40 object-cover rounded-t"
-            />
-            <div class="text-center p-4 text-gray-200">
-              <h3 class="font-semibold text-lg">{{ movie.title }}</h3>
-            </div>
-          </div>
-        </ng-template>
-      </p-carousel>
-    </div>
-    <div class="container mx-auto p-4 mt-16">
-      <h1 class="text-4xl font-extrabold mb-8 text-gray-200">Action</h1>
-      <div class="mb-12">
-        <p-carousel
-          [value]="movies"
-          [numVisible]="4"
-          [numScroll]="1"
-          [circular]="true"
-          class="movie-carousel"
-        >
-          <ng-template let-movie pTemplate="item">
-            <div
-              class="movie-item shadow-lg hover:shadow-2xl transition-shadow duration-300 cursor-pointer rounded overflow-hidden bg-gray-800 mx-4"
-              (click)="showMovieInfo(movie)"
-            >
-              <img
-                src="{{ movie.posterUrl }}"
-                alt="{{ movie.title }} Poster"
-                class="w-full h-40 object-cover rounded-t"
-              />
-              <div class="text-center p-4 text-gray-200">
-                <h3 class="font-semibold text-lg">{{ movie.title }}</h3>
+            <ng-template let-movie pTemplate="item">
+              <div
+                class="movie-item shadow-lg hover:shadow-2xl transition-shadow duration-300 cursor-pointer rounded overflow-hidden bg-gray-800 mx-4"
+                (click)="showMovieInfo(movie)"
+              >
+                <img
+                  src="{{ movie.posterUrl }}"
+                  alt="{{ movie.title }} Poster"
+                  class="w-full h-40 object-cover rounded-t"
+                />
+                <div class="text-center p-4 text-gray-200">
+                  <h3 class="font-semibold text-lg">{{ movie.title }}</h3>
+                </div>
               </div>
-            </div>
-          </ng-template>
-        </p-carousel>
+            </ng-template>
+          </p-carousel>
+        </div>
       </div>
-
-      <p-dialog
-        header="Movie Info"
-        [(visible)]="displayMovieDialog"
-        [modal]="true"
-        [style]="{ width: '50vw' }"
-        [draggable]="false"
-        [resizable]="false"
-        class="rounded-lg shadow-lg"
-        (onHide)="onDialogHide()"
-      >
-        <app-movie-info [movie]="selectedMovie" class="p-4"></app-movie-info>
-      </p-dialog>
-
-
     </div>
+
+    <br>
+    <!-- Reset button for search results -->
+    <div *ngIf="(sections.length === 1 && sections[0].genre === 'Search Results') || noResults" class="text-center mb-4">
+      <p-button label="Return" severity="info" [rounded]="true" (click)="resetState()"></p-button>
+    </div>
+
+    <!-- Movie Info Dialog -->
+    <p-dialog
+      header="Movie Info"
+      [(visible)]="displayMovieDialog"
+      [modal]="true"
+      [style]="{ width: '50vw' }"
+      [draggable]="false"
+      [resizable]="false"
+      class="rounded-lg shadow-lg"
+      (onHide)="onDialogHide()"
+    >
+      <app-movie-info [movie]="selectedMovie" class="p-4"></app-movie-info>
+    </p-dialog>
   </div>
 </div>

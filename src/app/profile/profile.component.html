@@ -1,10 +1,10 @@
 <app-navbar
   class="bg-white-800 text-white shadow-md sticky top-0 z-40"
 ></app-navbar>
-<div class="p-6 bg-gray-800 text-white">
+<div class="p-6 bg-gray-900 text-white">
   <div class="flex flex-col items-center">
     <div class="relative w-full">
-      <div class="absolute top-4 right-4">
+      <div *ngIf="isFilmmaker" class="absolute top-4 right-4">
         <button
           pButton
           type="button"
@@ -18,14 +18,15 @@
 
     <!-- Profile Picture -->
     <div
-      class="icon bg-gray-600 rounded-full w-24 h-24 flex items-center justify-center overflow-hidden"
+      class="icon rounded-full w-24 h-24 flex items-center justify-center overflow-hidden"
     >
-      <img
-        *ngIf="userProfilePic; else defaultProfile"
-        [src]="userProfilePic"
-        alt="Profile Picture"
-        class="w-full h-full object-cover"
-      />
+      <p-avatar
+        *ngIf="userProfilePhotoURL; else defaultProfile"
+        [image]="userProfilePhotoURL"
+        class="mr-2"
+        size="xlarge"
+        shape="circle"
+      ></p-avatar>
       <ng-template #defaultProfile>
         <i class="pi pi-user text-4xl"></i>
       </ng-template>
@@ -33,18 +34,22 @@
 
     <!-- User Name -->
     <h2>{{ userName || "Your Name" }}</h2>
-    <p>Lorem, ipsum.</p>
 
-    <h2>Brief Description</h2>
+    <h2>Description</h2>
     <p>
-      Lorem ipsum dolor sit amet consectetur adipisicing elit. Ad maiores minus
-      expedita illum!
+      Welcome to your profile! Here you can manage your movies, update your personal information, and explore new
+      content.
     </p>
 
-    <h2>Movie Feed</h2>
-    <div class="movie-feed mt-6 w-full">
+    <div *ngIf="isFilmmaker" class="movie-feed mt-6 w-full">
+
+      <h2 class="text-2xl text-center font-semibold mb-4">Your Movies</h2>
+      <div class="text-center text-gray-200" *ngIf="movies.length === 0">
+        <p>No movies found. Click the upload button to add your own movie!</p>
+      </div>
       <!-- Carousel for Movies -->
       <p-carousel
+        *ngIf="movies.length !== 0"
         [value]="movies"
         [numVisible]="4"
         [numScroll]="1"
