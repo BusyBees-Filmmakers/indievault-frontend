@@ -11,7 +11,7 @@
   <ng-template pTemplate="end">
     <div class="flex items-center space-x-4">
       <!-- Search bar -->
-      <div class="search-bar">
+      <div class="search-bar" *ngIf="isLoggedIn">
         <input
           type="text"
           pInputText

@@ -7,6 +7,7 @@ import { ContactUsComponent } from '../contact-us/contact-us.component';
 import { NavbarComponent } from '../navbar/navbar.component';
 import { CommonModule } from '@angular/common';
 import { Auth, GoogleAuthProvider, signInWithPopup } from '@angular/fire/auth';
+import {Title} from "@angular/platform-browser";
 
 @Component({
   selector: 'app-login',
@@ -24,12 +25,12 @@ import { Auth, GoogleAuthProvider, signInWithPopup } from '@angular/fire/auth';
   styleUrl: './login.component.css',
 })
 export class LoginComponent implements OnInit {
-  auth = inject(Auth);
-  router = inject(Router);
 
-  constructor() {}
+
+  constructor(private titleService: Title, private auth: Auth, private router: Router) {}
 
   ngOnInit(): void {
+    this.titleService.setTitle('Welcome to IndieVault!');
     this.auth.onAuthStateChanged((user) => {
       if (user) {
         const subscriptionStatus = localStorage.getItem(`subscription_${user.uid}`);
@@ -48,10 +49,10 @@ export class LoginComponent implements OnInit {
     await signInWithPopup(this.auth, provider).then(async (result) => {
       if (result.user) {
         const user = result.user;
-  
+
         // Check if subscription status is already in localStorage
         const subscriptionStatus = localStorage.getItem(`subscription_${user.uid}`);
-  
+
         if (!subscriptionStatus) {
           // If no subscription status, default to unsubscribed
           localStorage.setItem(`subscription_${user.uid}`, 'unsubscribed');
