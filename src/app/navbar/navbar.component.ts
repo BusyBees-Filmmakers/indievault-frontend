@@ -1,12 +1,12 @@
-import { Component, NgModule, ViewChild } from '@angular/core';
-import { Menu } from 'primeng/menu';
-import { Router } from '@angular/router';
-import { Auth, onAuthStateChanged, signOut, User } from '@angular/fire/auth';
-import { MovieService } from '../service/movie/movie.service';
-import { SharedService } from '../service/shared/shared.service';
-import { FormsModule } from '@angular/forms';
-import { ImportsModule } from '../imports';
-import { MenuItem } from 'primeng/api';
+import {Component, ViewChild} from '@angular/core';
+import {Menu} from 'primeng/menu';
+import {Router} from '@angular/router';
+import {Auth, onAuthStateChanged, signOut, User} from '@angular/fire/auth';
+import {MovieService} from '../service/movie/movie.service';
+import {SharedService} from '../service/shared/shared.service';
+import {FormsModule} from '@angular/forms';
+import {ImportsModule} from '../imports';
+import {MenuItem} from 'primeng/api';
 import {AvatarModule} from "primeng/avatar";
 
 @Component({
@@ -75,43 +75,47 @@ export class NavbarComponent {
             icon: 'pi pi-fw pi-home',
             routerLink: ['/home'],
           },
-            {
-              label: 'Product features',
-              icon: 'pi pi-fw pi-star',
-              routerLink: ['/product-features'],
-            },
+          {
+            label: 'Product features',
+            icon: 'pi pi-fw pi-star',
+            routerLink: ['/product-features'],
+          },
           {
             label: 'Categories',
             icon: 'pi pi-fw pi-list',
             items: [
-              { label: 'Selected for You', routerLink: ['/category/selected-for-you'] },
-              { label: 'Action', routerLink: ['/category/action'] },
-              { label: 'Comedy', routerLink: ['/category/comedy'] },
-              { label: 'Drama', routerLink: ['/category/drama'] },
-              { label: 'Horror', routerLink: ['/category/horror'] },
-              { label: 'Romance', routerLink: ['/category/romance'] },
-              { label: 'Scifi', routerLink: ['/category/scifi'] },
+              {label: 'Selected for You', routerLink: ['/category/selected-for-you']},
+              {label: 'Action', routerLink: ['/category/action']},
+              {label: 'Comedy', routerLink: ['/category/comedy']},
+              {label: 'Drama', routerLink: ['/category/drama']},
+              {label: 'Horror', routerLink: ['/category/horror']},
+              {label: 'Romance', routerLink: ['/category/romance']},
+              {label: 'Scifi', routerLink: ['/category/scifi']},
             ],
           },
-          ]
-        : [
-            {
-              label: 'Product Features',
-              icon: 'pi pi-fw pi-star',
-              routerLink: ['/product-features'],
-            },
-          ]),
+        ]
+        : [{
+          label: 'Welcome to IndieVault!',
+          icon: 'pi pi-fw pi-info-circle',
+          routerLink: ['/'],
+        },
+          {
+            label: 'Product Features',
+            icon: 'pi pi-fw pi-star',
+            routerLink: ['/product-features'],
+          },
+        ]),
     ];
 
     this.profileItems = [
       ...(this.isFilmmaker
         ? [
-            {
-              label: 'Profile',
-              icon: 'pi pi-fw pi-user',
-              routerLink: ['/profile'],
-            },
-          ]
+          {
+            label: 'Profile',
+            icon: 'pi pi-fw pi-user',
+            routerLink: ['/profile'],
+          },
+        ]
         : []),
       {
         label: 'Logout',

@@ -1,18 +1,23 @@
 <app-navbar class="bg-white-800 text-white shadow-md sticky top-0 z-40"></app-navbar>
-<div class="flex flex-col items-center justify-center h-screen">
-  <!-- Logo Section -->
-  <img class="mb-4 max-w-md w-auto h-auto mx-auto" src="assets/logo-no-bg.png" alt="Indievault logo">
+<div class="flex flex-col items-center justify-center h-screen bg-gray-900 text-white relative">
+  <!-- Background Image Section -->
+  <div class="absolute inset-0 bg-cover bg-center opacity-50" style="background-image: url('assets/photo.jpg');"></div>
 
-  <!-- Product Description and Value Proposition Section -->
-  <div class="text-center px-4 mb-4">
-    <h1 class="text-3xl font-bold mb-2">Empowering Independent Filmmakers</h1>
-    <p class="text-lg text-gray-600">
-      Showcase your films, reach a global audience, and enjoy fair revenue sharing on a platform dedicated to independent creators.
+  <!-- Content Section -->
+  <div class="relative z-10 text-center px-8 mb-8">
+    <!-- Logo Section -->
+    <img class="mb-8 max-w-4xl w-auto h-auto mx-auto" src="assets/logo-no-bg.png" alt="Indievault logo">
+
+    <!-- Product Description and Value Proposition Section -->
+    <h1 class="text-4xl font-bold mb-4">Connecting Filmmakers and Film Lovers</h1>
+    <p class="text-lg text-gray-400">
+      Showcase bold creations, explore unique stories, and join a platform where independent cinema thrives.
+      Whether you're a filmmaker or a viewer, IndieVault empowers you to share, discover, and celebrate the art of storytelling.
     </p>
-  </div>
 
-  <!-- Login Button -->
-  <p-button class="mt-3" label="Sign up with Google" (onClick)="loginWithGoogle()"/>
+    <!-- Login Button -->
+    <p-button class="mt-6 p-button-rounded p-button-lg" label="Sign up with Google" (onClick)="loginWithGoogle()"></p-button>
+  </div>
 </div>
 
 <app-about></app-about>
